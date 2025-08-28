@@ -17,7 +17,6 @@ library(plotly)
 source("format_species_names.R")
 source("format_table.R")
 
-
 # load in data (10 factors)
 com_rev_data <- read.csv("tables/2_commercial_revenue.csv", header = TRUE)
 rec_data <- read.csv("tables/4_recreational_importance.csv", header = TRUE)

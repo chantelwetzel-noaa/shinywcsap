@@ -21,7 +21,6 @@ library(rmarkdown)
 library(readr)
 library(openxlsx)
 
-
 # load in data
 com_rev_data <- read.csv("tables/2_commercial_revenue.csv", header = TRUE)
 
@@ -50,12 +49,10 @@ assess_freq_data <- read.csv("tables/7_assessment_frequency.csv", header = TRUE)
 assessed <- assess_freq_data[,"Last_Assessment_Year"]
 assessed[is.na(assessed)] <- "-" 
 
-
 ## load in species management groups, format cryptic species names
 species_groups <- read.csv("tables/species_management_groups.csv", header = TRUE)
 species_groups <- format_species_names(x = species_groups)
 colnames(species_groups)[2] <- "Management Group"
-
 
 # order species alphabetically, replace species column
 com_rev_data <- com_rev_data[order(com_rev_data$Species), ]
