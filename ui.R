@@ -77,12 +77,13 @@ shinyUI(
                          menuItem("Methodology", tabName = "methodology",
                                   icon = icon("list-check")),
                          fluidRow(
+                           column(width = 9, 
+                                  selectInput(inputId = "yr", "Year", choices = c("2024", "2026")) 
+                           ),
                            column(width = 6, 
                                   menuItem("Overall Ranking:",
                                                       tabName = "overall_ranking", icon = icon("ranking-star"))
-                           ),
-                           column(width = 6, 
-                                  selectInput(inputId = "yr", "Year", choices = c("2024", "2026")))
+                           )
                          ),
                          menuItem("Factors", tabName = "factors", icon = icon("table"),
                                   menuSubItem("Fishing Mortality", tabName = "fm_page",
@@ -214,13 +215,13 @@ shinyUI(
           
           # overall ranking page
           tabItem(tabName = "overall_ranking",
-                  h1("2024 Groundfish Assessment Prioritization Ranking"),
+                  h1("Groundfish Assessment Prioritization Ranking"),
                   fluidRow(
                     # overall ranking plot
                     box(title = "Overall Ranking", status = "primary",
                         solidHeader = TRUE, collapsible = TRUE,
                         width = 12,
-                        plotlyOutput("overall_ranking") %>% withSpinner(),
+                        plotlyOutput("overall_ranking") |> withSpinner(),
                         div(style = "display:inline-block", p("Show")),
                         div(style = "display:inline-block",
                             selectInput("num_col", label = NULL,
@@ -295,8 +296,7 @@ shinyUI(
                     box(title = "Factor Summary", status = "primary",
                         solidHeader = TRUE, collapsible = TRUE,
                         width = 12,
-                        uiOutput("overall_gt_table") %>% withSpinner(),
-                        #uiOutput("test") %>% withSpinner(),
+                        uiOutput("overall_gt_table") |> withSpinner(),
                         div(style = "display:inline-block",
                             downloadButton("overall_csv", "Download CSV")
                         ),
@@ -403,7 +403,7 @@ shinyUI(
                     # fishing mortality table
                     box(title = "Factor Table", status = "primary", solidHeader = TRUE,
                         collapsible = TRUE, width = 9,
-                        gt_output("fm_gt_table") %>% withSpinner(),
+                        gt_output("fm_gt_table") |> withSpinner(),
                         div(style = "display:inline-block",
                             downloadButton("fm_csv", "Download CSV")
                         ),
@@ -419,7 +419,7 @@ shinyUI(
                     # fishing mortality plot
                     box(title = "Fishing Mortality Ranking Plot", status = "primary",
                         solidHeader = TRUE, collapsible = TRUE,
-                        plotlyOutput("fm_species_ranking") %>% withSpinner(),
+                        plotlyOutput("fm_species_ranking") |> withSpinner(),
                         width = 12)
                   )
           ),
@@ -501,7 +501,7 @@ shinyUI(
                     # commercial importance table
                     box(title = "Factor Table", status = "primary", solidHeader = TRUE,
                         collapsible = TRUE, width = 9,
-                        gt_output("com_gt_table") %>% withSpinner(),
+                        gt_output("com_gt_table") |> withSpinner(),
                         div(style = "display:inline-block",
                             downloadButton("com_csv", "Download CSV")
                         ),
@@ -517,7 +517,7 @@ shinyUI(
                     # commercial importance plot
                     box(title = "Commercial Importance Ranking Plot", status = "primary",
                         solidHeader = TRUE, collapsible = TRUE,
-                        plotlyOutput("com_ranking") %>% withSpinner(),
+                        plotlyOutput("com_ranking") |> withSpinner(),
                         width = 12)
                   )
           ),
@@ -592,7 +592,7 @@ shinyUI(
                     # tribal importance table
                     box(title = "Factor Table", status = "primary", solidHeader = TRUE,
                         collapsible = TRUE, width = 9,
-                        gt_output("tribal_gt_table") %>% withSpinner(),
+                        gt_output("tribal_gt_table") |> withSpinner(),
                         div(style = "display:inline-block",
                             downloadButton("tribal_csv", "Download CSV")
                         ),
@@ -608,7 +608,7 @@ shinyUI(
                     # tribal importance plot
                     box(title = "Tribal Importance Ranking Plot", status = "primary",
                         solidHeader = TRUE, collapsible = TRUE,
-                        plotlyOutput("tribal_species_ranking") %>% withSpinner(),
+                        plotlyOutput("tribal_species_ranking") |> withSpinner(),
                         width = 12)
                   )
           ),
@@ -720,7 +720,7 @@ shinyUI(
                     # recreational importance table
                     box(title = "Factor Table", status = "primary", solidHeader = TRUE,
                         collapsible = TRUE, width = 9,
-                        gt_output("rec_gt_table") %>% withSpinner(),
+                        gt_output("rec_gt_table") |> withSpinner(),
                         div(style = "display:inline-block",
                             downloadButton("rec_csv", "Download CSV")
                         ),
@@ -736,7 +736,7 @@ shinyUI(
                     # recreational importance plot
                     box(title = "Recreational Importance Ranking Plot", status = "primary",
                         solidHeader = TRUE, collapsible = TRUE, 
-                        plotlyOutput("rec_species_ranking") %>% withSpinner(),
+                        plotlyOutput("rec_species_ranking") |> withSpinner(),
                         width = 12)
                   )
           ),
@@ -821,7 +821,7 @@ shinyUI(
                     # constituent demand table
                     box(title = "Factor Table", status = "primary", solidHeader = TRUE,
                         collapsible = TRUE, width = 9,
-                        gt_output("cd_gt_table") %>% withSpinner(),
+                        gt_output("cd_gt_table") |> withSpinner(),
                         div(style = "display:inline-block",
                             downloadButton("cd_csv", "Download CSV")
                         ),
@@ -837,7 +837,7 @@ shinyUI(
                     # constituent demand plot
                     box(title = "Constituent Demand Ranking Plot", status = "primary",
                         solidHeader = TRUE, collapsible = TRUE,
-                        plotlyOutput("cd_species_ranking") %>% withSpinner(),
+                        plotlyOutput("cd_species_ranking") |> withSpinner(),
                         width = 12)
                   )
           ),
@@ -932,7 +932,7 @@ shinyUI(
                     # stock status table
                     box(title = "Factor Table", status = "primary", solidHeader = TRUE,
                         collapsible = TRUE, width = 9,
-                        gt_output("ss_gt_table") %>% withSpinner(),
+                        gt_output("ss_gt_table") |> withSpinner(),
                         div(style = "display:inline-block",
                             downloadButton("ss_csv", "Download CSV")
                         ),
@@ -948,7 +948,7 @@ shinyUI(
                     # constituent demand plot
                     box(title = "Stock Status Ranking Plot", status = "primary",
                         solidHeader = TRUE, collapsible = TRUE,
-                        plotlyOutput("ss_species_ranking") %>% withSpinner(),
+                        plotlyOutput("ss_species_ranking") |> withSpinner(),
                         width = 12)
                   )
           ),
@@ -1017,7 +1017,7 @@ shinyUI(
                     # rebuilding table
                     box(title = "Factor Table", status = "primary", solidHeader = TRUE,
                         collapsible = TRUE, width = 9,
-                        gt_output("reb_gt_table") %>% withSpinner(),
+                        gt_output("reb_gt_table") |> withSpinner(),
                         div(style = "display:inline-block",
                             downloadButton("reb_csv", "Download CSV")
                         ),
@@ -1033,7 +1033,7 @@ shinyUI(
                     # rebuilding plot
                     box(title = "Rebuilding Ranking Plot", status = "primary",
                         solidHeader = TRUE, collapsible = TRUE,
-                        plotlyOutput("reb_species_ranking") %>% withSpinner(),
+                        plotlyOutput("reb_species_ranking") |> withSpinner(),
                         width = 12)
                   )
           ),
@@ -1127,7 +1127,7 @@ shinyUI(
                     # ecosystem table
                     box(title = "Factor Table", status = "primary", solidHeader = TRUE,
                         collapsible = TRUE, width = 9,
-                        gt_output("eco_gt_table") %>% withSpinner(),
+                        gt_output("eco_gt_table") |> withSpinner(),
                         div(style = "display:inline-block",
                             downloadButton("eco_csv", "Download CSV")
                         ),
@@ -1143,7 +1143,7 @@ shinyUI(
                     # ecosystem plot
                     box(title = "Ecosystem Ranking Plot", status = "primary",
                         solidHeader = TRUE, collapsible = TRUE,
-                        plotlyOutput("eco_species_ranking") %>% withSpinner(),
+                        plotlyOutput("eco_species_ranking") |> withSpinner(),
                         width = 12)
                   )
           ),
@@ -1283,7 +1283,7 @@ shinyUI(
                     # assessment frequency table
                     box(title = "Factor Table", status = "primary", solidHeader = TRUE,
                         collapsible = TRUE, width = 9,
-                        gt_output("af_gt_table") %>% withSpinner(),
+                        gt_output("af_gt_table") |> withSpinner(),
                         div(style = "display:inline-block",
                             downloadButton("af_csv", "Download CSV")
                         ),
@@ -1300,7 +1300,7 @@ shinyUI(
                     # assessment frequency plot
                     box(title = "Assessment Frequency Ranking Plot", status = "primary",
                         solidHeader = TRUE, collapsible = TRUE,
-                        plotlyOutput("af_species_ranking") %>% withSpinner(),
+                        plotlyOutput("af_species_ranking") |> withSpinner(),
                         width = 12)
                   )
           ),
@@ -1401,7 +1401,7 @@ shinyUI(
                     # new information table
                     box(title = "Factor Table", status = "primary", solidHeader = TRUE,
                         collapsible = TRUE, width = 9,
-                        gt_output("ni_gt_table") %>% withSpinner(),
+                        gt_output("ni_gt_table") |> withSpinner(),
                         div(style = "display:inline-block",
                             downloadButton("ni_csv", "Download CSV")
                         ),
@@ -1417,7 +1417,7 @@ shinyUI(
                     # new information plot
                     box(title = "New Information Ranking Plot", status = "primary",
                         solidHeader = TRUE, collapsible = TRUE,
-                        plotlyOutput("ni_species_ranking") %>% withSpinner(),
+                        plotlyOutput("ni_species_ranking") |> withSpinner(),
                         width = 12)
                   )
           ),
