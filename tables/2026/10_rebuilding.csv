@@ -1,66 +1,66 @@
-"Species","Rank","Factor_Score","Rebuilding_Target_Year"
-"arrowtooth flounder",3,0,NA
-"aurora rockfish",3,0,NA
-"bank rockfish",3,0,NA
-"big skate",3,0,NA
-"black rockfish",3,0,NA
-"blackgill rockfish",3,0,NA
-"blue and deacon rockfish",3,0,NA
-"bocaccio",3,0,NA
-"brown rockfish",3,0,NA
-"cabezon",3,0,NA
-"California scorpionfish",3,0,NA
-"canary rockfish",3,0,NA
-"chilipepper",3,0,NA
-"China rockfish",3,0,NA
-"copper rockfish",3,0,NA
-"cowcod",3,0,NA
-"curlfin sole",3,0,NA
-"darkblotched rockfish",3,0,NA
-"Dover sole",3,0,NA
-"English sole",3,0,NA
-"flag rockfish",3,0,NA
-"flathead sole",3,0,NA
-"gopher and black and yellow rockfish",3,0,NA
-"grass rockfish",3,0,NA
-"greenspotted rockfish",3,0,NA
-"greenstriped rockfish",3,0,NA
-"honeycomb rockfish",3,0,NA
-"kelp greenling",3,0,NA
-"kelp rockfish",3,0,NA
-"leopard shark",3,0,NA
-"lingcod",3,0,NA
-"longnose skate",3,0,NA
-"longspine thornyhead",3,0,NA
-"olive rockfish",3,0,NA
-"Pacific cod",3,0,NA
-"Pacific ocean perch",3,0,NA
-"Pacific sanddab",3,0,NA
-"Pacific spiny dogfish",3,0,NA
-"petrale sole",3,0,NA
-"quillback rockfish",1,10,2060
-"redbanded rockfish",3,0,NA
-"redstripe rockfish",3,0,NA
-"rex sole",3,0,NA
-"rock sole",3,0,NA
-"rosethorn rockfish",3,0,NA
-"rosy rockfish",3,0,NA
-"rougheye and black spotted rockfish",3,0,NA
-"sablefish",3,0,NA
-"sand sole",3,0,NA
-"sharpchin rockfish",3,0,NA
-"shortraker rockfish",3,0,NA
-"shortspine thornyhead",3,0,NA
-"silvergray rockfish",3,0,NA
-"speckled rockfish",3,0,NA
-"splitnose rockfish",3,0,NA
-"squarespot rockfish",3,0,NA
-"starry flounder",3,0,NA
-"starry rockfish",3,0,NA
-"stripetail rockfish",3,0,NA
-"treefish",3,0,NA
-"vermilion and sunset rockfish",3,0,NA
-"widow rockfish",3,0,NA
-"yelloweye rockfish",2,9,2029
-"yellowmouth rockfish",3,0,NA
-"yellowtail rockfish",3,0,NA
+Species,Rank,Factor Score,Rebuilding Target Year,Management Group
+Arrowtooth flounder,3,0,NA,species specific
+Aurora rockfish,3,0,NA,minor slope rockfish
+Bank rockfish,3,0,NA,minor slope rockfish
+Big skate,3,0,NA,species specific
+Black rockfish,3,0,NA,species specific
+Blackgill rockfish,3,0,NA,minor slope rockfish
+Blue/Deacon rockfish,3,0,NA,minor nearshore rockfish
+Bocaccio,3,0,NA,species specific
+Brown rockfish,3,0,NA,minor nearshore rockfish
+Cabezon,3,0,NA,other groundfish
+California scorpionfish,3,0,NA,species specific
+Canary rockfish,3,0,NA,species specific
+Chilipepper,3,0,NA,species specific
+China rockfish,3,0,NA,minor nearshore rockfish
+Copper rockfish,3,0,NA,minor nearshore rockfish
+Cowcod,3,0,NA,minor shelf rockfish
+Curlfin sole,3,0,NA,other flatfish
+Darkblotched rockfish,3,0,NA,species specific
+Dover sole,3,0,NA,species specific
+English sole,3,0,NA,species specific
+Flag rockfish,3,0,NA,minor shelf rockfish
+Flathead sole,3,0,NA,other flatfish
+Gopher/Black and Yellow rockfish,3,0,NA,minor nearshore rockfish
+Grass rockfish,3,0,NA,minor nearshore rockfish
+Greenspotted rockfish,3,0,NA,minor shelf rockfish
+Greenstriped rockfish,3,0,NA,minor shelf rockfish
+Honeycomb rockfish,3,0,NA,minor shelf rockfish
+Kelp greenling,3,0,NA,other groundfish
+Kelp rockfish,3,0,NA,minor nearshore rockfish
+Leopard shark,3,0,NA,other groundfish
+Lingcod,3,0,NA,species specific
+Longnose skate,3,0,NA,species specific
+Longspine thornyhead,3,0,NA,species specific
+Olive rockfish,3,0,NA,minor nearshore rockfish
+Pacific cod,3,0,NA,species specific
+Pacific ocean perch,3,0,NA,species specific
+Pacific sanddab,3,0,NA,other flatfish
+Pacific spiny dogfish,3,0,NA,species specific
+Petrale sole,3,0,NA,species specific
+Quillback rockfish,1,10,2060,minor nearshore rockfish
+Redbanded rockfish,3,0,NA,minor slope rockfish
+Redstripe rockfish,3,0,NA,minor shelf rockfish
+Rex sole,3,0,NA,other flatfish
+Rock sole,3,0,NA,other flatfish
+Rosethorn rockfish,3,0,NA,minor shelf rockfish
+Rosy rockfish,3,0,NA,minor shelf rockfish
+Rougheye/Blackspotted rockfish,3,0,NA,minor slope rockfish
+Sablefish,3,0,NA,species specific
+Sand sole,3,0,NA,other flatfish
+Sharpchin rockfish,3,0,NA,minor slope rockfish
+Shortraker rockfish,3,0,NA,minor slope rockfish
+Shortspine thornyhead,3,0,NA,species specific
+Silvergray rockfish,3,0,NA,minor shelf rockfish
+Speckled rockfish,3,0,NA,minor shelf rockfish
+Splitnose rockfish,3,0,NA,minor slope rockfish
+Squarespot rockfish,3,0,NA,minor shelf rockfish
+Starry flounder,3,0,NA,species specific
+Starry rockfish,3,0,NA,minor shelf rockfish
+Stripetail rockfish,3,0,NA,minor shelf rockfish
+Treefish,3,0,NA,minor nearshore rockfish
+Vermilion/Sunset rockfish,3,0,NA,minor shelf rockfish
+Widow rockfish,3,0,NA,species specific
+Yelloweye rockfish,2,9,2029,species specific
+Yellowmouth rockfish,3,0,NA,minor slope rockfish
+Yellowtail rockfish,3,0,NA,species specific

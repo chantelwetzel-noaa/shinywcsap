@@ -1,66 +1,66 @@
-"Species","Rank","Factor_Score","Last_Assessed","New_Research","Issues_Can_be_Addressed","Survey_Abundance","Survey_Composition"
-"arrowtooth flounder",17,3,2017,0,0,1,2
-"aurora rockfish",6,5,2013,1,0,1,3
-"bank rockfish",6,5,NA,1,0,3,1
-"big skate",32,0,2019,0,0,0,0
-"black rockfish",32,0,2023,0,0,0,0
-"blackgill rockfish",23,2,2017,0,0,1,1
-"blue and deacon rockfish",32,0,2017,0,0,0,0
-"bocaccio",17,3,2017,0,0,1,2
-"brown rockfish",32,0,2013,0,0,0,0
-"cabezon",32,0,2019,0,0,0,0
-"California scorpionfish",32,0,2017,0,0,0,0
-"canary rockfish",32,0,2023,0,0,0,0
-"chilipepper",12,4,2015,1,0,1,2
-"China rockfish",32,0,2015,0,0,0,0
-"copper rockfish",32,0,2023,0,0,0,0
-"cowcod",32,0,2019,0,0,0,0
-"curlfin sole",6,5,NA,0,0,3,2
-"darkblotched rockfish",17,3,2017,0,0,1,2
-"Dover sole",17,3,2021,1,0,0,2
-"English sole",12,4,2013,0,0,1,3
-"flag rockfish",32,0,NA,0,0,0,0
-"flathead sole",6,5,NA,0,0,3,2
-"gopher and black and yellow rockfish",32,0,2019,0,0,0,0
-"grass rockfish",32,0,NA,0,0,0,0
-"greenspotted rockfish",12,4,2011,0,0,2,2
-"greenstriped rockfish",6,5,2009,0,0,2,3
-"honeycomb rockfish",32,0,NA,0,0,0,0
-"kelp greenling",32,0,2015,0,0,0,0
-"kelp rockfish",32,0,NA,0,0,0,0
-"leopard shark",32,0,NA,0,0,0,0
-"lingcod",32,0,2021,0,0,0,0
-"longnose skate",28,1,2019,0,0,0,1
-"longspine thornyhead",12,4,2013,0,0,1,3
-"olive rockfish",32,0,NA,0,0,0,0
-"Pacific cod",28,1,NA,0,0,0,1
-"Pacific ocean perch",23,2,2017,0,0,1,1
-"Pacific sanddab",2,6,NA,0,0,3,3
-"Pacific spiny dogfish",32,0,2021,0,0,0,0
-"petrale sole",32,0,2023,0,0,0,0
-"quillback rockfish",32,0,2021,0,0,0,0
-"redbanded rockfish",6,5,NA,1,0,3,1
-"redstripe rockfish",23,2,NA,0,0,0,2
-"rex sole",32,0,2023,0,0,0,0
-"rock sole",32,0,NA,0,0,0,0
-"rosethorn rockfish",2,6,NA,0,0,3,3
-"rosy rockfish",32,0,NA,0,0,0,0
-"rougheye and black spotted rockfish",23,2,2013,2,0,0,0
-"sablefish",28,1,2023,1,0,0,0
-"sand sole",32,0,NA,0,0,0,0
-"sharpchin rockfish",2,6,2013,0,0,3,3
-"shortraker rockfish",32,0,NA,0,0,0,0
-"shortspine thornyhead",32,0,2023,0,0,0,0
-"silvergray rockfish",32,0,NA,0,0,0,0
-"speckled rockfish",17,3,NA,0,0,2,1
-"splitnose rockfish",1,7,2009,2,0,2,3
-"squarespot rockfish",32,0,2021,0,0,0,0
-"starry flounder",32,0,NA,0,0,0,0
-"starry rockfish",12,4,NA,0,0,3,1
-"stripetail rockfish",2,6,NA,0,0,3,3
-"treefish",32,0,NA,0,0,0,0
-"vermilion and sunset rockfish",23,2,2021,0,0,0,2
-"widow rockfish",28,1,2019,1,0,0,0
-"yelloweye rockfish",32,0,2017,0,0,0,0
-"yellowmouth rockfish",32,0,NA,0,0,0,0
-"yellowtail rockfish",17,3,2017,1,0,0,2
+Species,Rank,Factor Score,Last Assessed,New Research,Issues Can be Addressed,Survey Abundance,Survey Composition,Management Group
+Arrowtooth flounder,17,3,2017,0,0,1,2,species specific
+Aurora rockfish,6,5,2013,1,0,1,3,minor slope rockfish
+Bank rockfish,6,5,NA,1,0,3,1,minor slope rockfish
+Big skate,32,0,2019,0,0,0,0,species specific
+Black rockfish,32,0,2023,0,0,0,0,species specific
+Blackgill rockfish,23,2,2017,0,0,1,1,minor slope rockfish
+Blue/Deacon rockfish,32,0,2017,0,0,0,0,minor nearshore rockfish
+Bocaccio,17,3,2017,0,0,1,2,species specific
+Brown rockfish,32,0,2013,0,0,0,0,minor nearshore rockfish
+Cabezon,32,0,2019,0,0,0,0,other groundfish
+California scorpionfish,32,0,2017,0,0,0,0,species specific
+Canary rockfish,32,0,2023,0,0,0,0,species specific
+Chilipepper,12,4,2015,1,0,1,2,species specific
+China rockfish,32,0,2015,0,0,0,0,minor nearshore rockfish
+Copper rockfish,32,0,2023,0,0,0,0,minor nearshore rockfish
+Cowcod,32,0,2019,0,0,0,0,minor shelf rockfish
+Curlfin sole,6,5,NA,0,0,3,2,other flatfish
+Darkblotched rockfish,17,3,2017,0,0,1,2,species specific
+Dover sole,17,3,2021,1,0,0,2,species specific
+English sole,12,4,2013,0,0,1,3,species specific
+Flag rockfish,32,0,NA,0,0,0,0,minor shelf rockfish
+Flathead sole,6,5,NA,0,0,3,2,other flatfish
+Gopher/Black and Yellow rockfish,32,0,2019,0,0,0,0,minor nearshore rockfish
+Grass rockfish,32,0,NA,0,0,0,0,minor nearshore rockfish
+Greenspotted rockfish,12,4,2011,0,0,2,2,minor shelf rockfish
+Greenstriped rockfish,6,5,2009,0,0,2,3,minor shelf rockfish
+Honeycomb rockfish,32,0,NA,0,0,0,0,minor shelf rockfish
+Kelp greenling,32,0,2015,0,0,0,0,other groundfish
+Kelp rockfish,32,0,NA,0,0,0,0,minor nearshore rockfish
+Leopard shark,32,0,NA,0,0,0,0,other groundfish
+Lingcod,32,0,2021,0,0,0,0,species specific
+Longnose skate,28,1,2019,0,0,0,1,species specific
+Longspine thornyhead,12,4,2013,0,0,1,3,species specific
+Olive rockfish,32,0,NA,0,0,0,0,minor nearshore rockfish
+Pacific cod,28,1,NA,0,0,0,1,species specific
+Pacific ocean perch,23,2,2017,0,0,1,1,species specific
+Pacific sanddab,2,6,NA,0,0,3,3,other flatfish
+Pacific spiny dogfish,32,0,2021,0,0,0,0,species specific
+Petrale sole,32,0,2023,0,0,0,0,species specific
+Quillback rockfish,32,0,2021,0,0,0,0,minor nearshore rockfish
+Redbanded rockfish,6,5,NA,1,0,3,1,minor slope rockfish
+Redstripe rockfish,23,2,NA,0,0,0,2,minor shelf rockfish
+Rex sole,32,0,2023,0,0,0,0,other flatfish
+Rock sole,32,0,NA,0,0,0,0,other flatfish
+Rosethorn rockfish,2,6,NA,0,0,3,3,minor shelf rockfish
+Rosy rockfish,32,0,NA,0,0,0,0,minor shelf rockfish
+Rougheye/Blackspotted rockfish,23,2,2013,2,0,0,0,minor slope rockfish
+Sablefish,28,1,2023,1,0,0,0,species specific
+Sand sole,32,0,NA,0,0,0,0,other flatfish
+Sharpchin rockfish,2,6,2013,0,0,3,3,minor slope rockfish
+Shortraker rockfish,32,0,NA,0,0,0,0,minor slope rockfish
+Shortspine thornyhead,32,0,2023,0,0,0,0,species specific
+Silvergray rockfish,32,0,NA,0,0,0,0,minor shelf rockfish
+Speckled rockfish,17,3,NA,0,0,2,1,minor shelf rockfish
+Splitnose rockfish,1,7,2009,2,0,2,3,minor slope rockfish
+Squarespot rockfish,32,0,2021,0,0,0,0,minor shelf rockfish
+Starry flounder,32,0,NA,0,0,0,0,species specific
+Starry rockfish,12,4,NA,0,0,3,1,minor shelf rockfish
+Stripetail rockfish,2,6,NA,0,0,3,3,minor shelf rockfish
+Treefish,32,0,NA,0,0,0,0,minor nearshore rockfish
+Vermilion/Sunset rockfish,23,2,2021,0,0,0,2,minor shelf rockfish
+Widow rockfish,28,1,2019,1,0,0,0,species specific
+Yelloweye rockfish,32,0,2017,0,0,0,0,species specific
+Yellowmouth rockfish,32,0,NA,0,0,0,0,minor slope rockfish
+Yellowtail rockfish,17,3,2017,1,0,0,2,species specific
