@@ -158,7 +158,6 @@ shinyServer(function(input, output, session) {
       )
     }
   })
-  
   output$management_groups10 <- renderUI({
     if(!is.null(species_groups)) {
       management_groups10 <- unique(as.character(species_groups()$`Management Group`))
@@ -259,6 +258,17 @@ shinyServer(function(input, output, session) {
                            "fish_mort_fs", "eco_fs", "new_info_fs", "assess_fs")
     results <- as.data.frame(results)
     results
+  })
+  
+  text_recent_five_years <- reactive({
+    req(input$yr)
+    if (input$yr == 2024) {
+      text_recent_five_years <- "2018 - 2022"
+    } 
+    if (input$yr == 2026) {
+      text_recent_five_years <- "2020 - 2024"
+    }
+    text_recent_five_years
   })
   
   # render HTML files for methodology page
@@ -682,8 +692,8 @@ shinyServer(function(input, output, session) {
       gt() |>
       tab_header(
         title = "Commercial Importance",
-        subtitle = "Measured by total inflation adjusted ex-vessel revenue data ($1,000)
-        between 2018-2022."
+        subtitle = paste0("Measured by total inflation adjusted ex-vessel revenue data ($1,000)
+        between ", text_recent_five_years(), ".")
       ) |>
       tab_options(
         heading.subtitle.font.size = 14,
@@ -809,8 +819,7 @@ shinyServer(function(input, output, session) {
       gt() |>
       tab_header(
         title = "Recreational Importance",
-        subtitle = "Measured by total recreational catch
-        between 2018-2022."
+        subtitle = paste0("Measured by total recreational catch between ", text_recent_five_years(), ".")
       ) |>
       tab_options(
         heading.subtitle.font.size = 14,
@@ -832,7 +841,7 @@ shinyServer(function(input, output, session) {
     
     rec_table <- rec_table |>
       fmt_number(columns = -c("Rank"), decimals = 2) |>   
-      tab_footnote("Source: GEMM 2018-2022") |>
+      tab_footnote(paste0("Source: GEMM ", text_recent_five_years(), ".")) |>
       tab_footnote(footnote = "Recreational catches are not calculated
                    for petrale sole and widow rockfish in Washington.",
                    locations = cells_column_labels(columns = `Factor Score`)
@@ -909,8 +918,8 @@ shinyServer(function(input, output, session) {
       gt() |>
       tab_header(
         title = "Tribal Importance",
-        subtitle = "Measured by total inflation adjusted ex-vessel revenue data for tribal landings
-        between 2018-2022."
+        subtitle = paste0("Measured by total inflation adjusted ex-vessel revenue data for tribal landings
+        between ", text_recent_five_years(), ".")
       ) |>
       tab_options(
         heading.subtitle.font.size = 14,
@@ -1044,7 +1053,7 @@ shinyServer(function(input, output, session) {
                     rows = `Projected ACL Attainment` > 1.00
                   )
         ) |>
-        tab_footnote(footnote = "Source: GEMM 2018-2022 and PacFIN APEX GMT008",
+        tab_footnote(footnote = paste0("Source: GEMM ", text_recent_five_years(), " and PacFIN APEX GMT008"),
                      locations = cells_column_labels(columns = `Projected ACL Attainment`) 
         ) |>
         tab_footnote(footnote = "Cells with red text indicate
@@ -1362,8 +1371,7 @@ shinyServer(function(input, output, session) {
       gt() |>
       tab_header(
         title = "Fishing Mortality",
-        subtitle = "Measured by average OFLs and average catch
-        between 2018-2022."
+        subtitle = paste0("Measured by average OFLs and average catch between ", text_recent_five_years(), ".")
       ) |>
       tab_options(
         heading.subtitle.font.size = 14,
@@ -1584,8 +1592,8 @@ shinyServer(function(input, output, session) {
       tab_header(
         title = "New Information", 
         subtitle = "Measured by known available on ongoing research and data available in 
-        the NWFSC West Coast Groundfish Bottom Trawl and Hook-and-Line surveys since the 
-        most recent assessment by species."
+        the Northwest Fisheries Science Center West Coast Groundfish Bottom Trawl and 
+        Hook-and-Line Surveys since the most recent assessment by species."
       ) |>
       tab_options(
         heading.subtitle.font.size = 14,
