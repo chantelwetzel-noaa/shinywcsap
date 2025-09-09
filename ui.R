@@ -13,63 +13,6 @@ library(dplyr)
 library(gt)
 library(plotly)
 
-# FUNCTIONS:
-source("format_species_names.R")
-source("format_table.R")
-
-# load in data (10 factors)
-com_rev_data <- read.csv("tables/2_commercial_revenue.csv", header = TRUE)
-rec_data <- read.csv("tables/4_recreational_importance.csv", header = TRUE)
-tribal_data <- read.csv("tables/3_tribal_revenue.csv", header = TRUE)
-#tribal_data <- tribal_data[, c("Species", "Rank", "Factor_Score", "Tribal_Score", "Revenue")]
-tribal_data <- tribal_data[, !colnames(tribal_data) %in% c("OR_Revenue", "CA_Revenue", "WA_Revenue")]
-const_dem_data <- read.csv("tables/8_constituent_demand.csv", header = TRUE)
-rebuilding_data <- read.csv("tables/10_rebuilding.csv", header = TRUE)
-stock_stat_data <- read.csv("tables/6_stock_status.csv", header = TRUE)
-fish_mort_data <- read.csv("tables/1_fishing_mortality.csv", header = TRUE)
-eco_data <- read.csv("tables/5_ecosystem.csv", header = TRUE)
-new_info_data <- read.csv("tables/9_new_information.csv", header = TRUE)
-ass_freq_data <- read.csv("tables/7_assessment_frequency.csv", header = TRUE) 
-
-# load in species management groups
-species_groups <- read.csv("tables/species_management_groups.csv", header = TRUE)
-colnames(species_groups)[2] <- "Management Group"
-
-# join data + rename columns
-joined_com_df <- format_table(com_rev_data, species_groups)
-  
-joined_rec_df <- format_table(rec_data, species_groups)
-
-joined_tribal_df <- format_table(tribal_data, species_groups)
-
-joined_cd_df <- format_table(const_dem_data, species_groups)
-
-joined_reb_df <- format_table(rebuilding_data, species_groups)
-
-joined_ss_df <- format_table(stock_stat_data, species_groups)
-
-joined_fm_df <- format_table(fish_mort_data, species_groups)
-
-joined_eco_df <- format_table(eco_data, species_groups)
-
-joined_ni_df <- format_table(new_info_data, species_groups)
-
-joined_af_df <- format_table(ass_freq_data, species_groups)
-joined_af_df <- joined_af_df %>%
-  select(Species, Rank, `Factor Score`, `Recruitment Variation`:`Management Group`)
-
-# freezing species column when selecting
-com_cols <- colnames(joined_com_df)[colnames(joined_com_df) != "Species"]
-rec_cols <- colnames(joined_rec_df)[colnames(joined_rec_df) != "Species"]
-tribal_cols <- colnames(joined_tribal_df)[colnames(joined_tribal_df) != "Species"]
-cd_cols <- colnames(joined_cd_df)[colnames(joined_cd_df) != "Species"]
-reb_cols <- colnames(joined_reb_df)[colnames(joined_reb_df) != "Species"]
-ss_cols <- colnames(joined_ss_df)[colnames(joined_ss_df) != "Species"]
-fm_cols <- colnames(joined_fm_df)[colnames(joined_fm_df) != "Species"]
-eco_cols <- colnames(joined_eco_df)[colnames(joined_eco_df) != "Species"]
-ni_cols <- colnames(joined_ni_df)[colnames(joined_ni_df) != "Species"]
-af_cols <- colnames(joined_af_df)[colnames(joined_af_df) != "Species"]
-
 
 # Define UI for application that produces tables + description of variables
 shinyUI(
@@ -119,7 +62,7 @@ shinyUI(
    
    # format mathematical expressions
    withMathJax(),
-   
+
    # load page layout
     dashboardPage(
       
@@ -133,8 +76,14 @@ shinyUI(
                          menuItem("Home", tabName = "home", icon = icon("home")),
                          menuItem("Methodology", tabName = "methodology",
                                   icon = icon("list-check")),
-                         menuItem("2024 Overall Ranking",
-                                  tabName = "overall_ranking", icon = icon("ranking-star")),
+                         fluidRow(
+                           column(width = 6, 
+                                  menuItem("Overall Ranking:",
+                                                      tabName = "overall_ranking", icon = icon("ranking-star"))
+                           ),
+                           column(width = 6, 
+                                  selectInput(inputId = "yr", "Year", choices = c("2024", "2026")))
+                         ),
                          menuItem("Factors", tabName = "factors", icon = icon("table"),
                                   menuSubItem("Fishing Mortality", tabName = "fm_page",
                                               icon = icon("ship")),
@@ -372,7 +321,14 @@ shinyUI(
                             "Columns",
                             br(),
                             checkboxGroupInput("fm_columns", "Select columns to display:",
-                                               choices = fm_cols,
+                                               choices = c("Rank", 
+                                                           "Factor Score",
+                                                           "Average Catches",
+                                                           "Average OFL",
+                                                           "Average OFL Attainment",
+                                                           "Average ACL",
+                                                           "Average ACL Attainment",
+                                                           "Management Group"), #fm_cols,
                                                selected = c("Rank", "Factor Score",
                                                             "Average Catches",
                                                             "Average OFL",
@@ -384,7 +340,14 @@ shinyUI(
                             "Coloring",
                             br(),
                             checkboxGroupInput("fm_colors", "Select columns to color:",
-                                               choices = fm_cols,
+                                               choices = c("Rank", 
+                                                           "Factor Score",
+                                                           "Average Catches",
+                                                           "Average OFL",
+                                                           "Average OFL Attainment",
+                                                           "Average ACL",
+                                                           "Average ACL Attainment",
+                                                           "Management Group"), #fm_cols,
                                                selected = c("Rank")
                             )
                           ),
@@ -430,13 +393,14 @@ shinyUI(
                           )
                         ),
                         br(),
-                        selectInput(
-                          inputId = "fm_species_selector",
-                          label = "Select a species management group:",
-                          choices = c(unique(as.character(species_groups$`Management Group`))),
-                          selected = c(unique(as.character(species_groups$`Management Group`))),
-                          multiple = TRUE
-                        ),
+                        uiOutput("management_groups1"),
+                        #selectInput(
+                        #  inputId = "fm_species_selector",
+                        #  label = "Select a species management group:",
+                        #  choices = c(unique(as.character(species_groups()$`Management Group`))),
+                        #  selected = c(unique(as.character(species_groups()$`Management Group`))),
+                        #  multiple = TRUE
+                        #),
                         em("To edit your selection, place cursor in the box. Press delete to
                            narrow down your selection."),
                         br(),
@@ -478,7 +442,8 @@ shinyUI(
                             "Columns",
                             br(),
                             checkboxGroupInput("com_columns", "Select columns to display:",
-                                               choices = com_cols,
+                                               choices = c("Rank", "Factor Score", "Assessed Last Cycle", "Revenue",
+                                                           "CA Revenue", "OR Revenue", "WA Revenue", "Management Group"),
                                                selected = c("Rank", "Factor Score",
                                                             "Revenue")
                             )
@@ -487,7 +452,8 @@ shinyUI(
                             "Coloring",
                             br(),
                             checkboxGroupInput("com_colors", "Select columns to color:",
-                                               choices = com_cols,
+                                               choices = c("Rank", "Factor Score", "Assessed Last Cycle", "Revenue",
+                                                           "CA Revenue", "OR Revenue", "WA Revenue", "Management Group"),
                                                selected = c("Rank")
                             )
                           ),
@@ -532,12 +498,13 @@ shinyUI(
                           )
                         ),
                         br(),
-                        selectInput("com_species_selector",
-                                    "Select a species management group:",
-                                    choices = c(unique(as.character(species_groups$`Management Group`))),
-                                    selected = c(unique(as.character(species_groups$`Management Group`))),
-                                    multiple = TRUE
-                        ),
+                        uiOutput("management_groups2"),
+                        #selectInput("com_species_selector",
+                        #            "Select a species management group:",
+                        #            choices = c(unique(as.character(species_groups()$`Management Group`))),
+                        #            selected = c(unique(as.character(species_groups()$`Management Group`))),
+                        #            multiple = TRUE
+                        #),
                         em("To edit your selection, place cursor in the box. Press delete to
                            narrow down your selection."),
                         br(),
@@ -579,7 +546,8 @@ shinyUI(
                             "Columns",
                             br(),
                             checkboxGroupInput("tribal_columns", "Select columns to display:",
-                                               choices = tribal_cols,
+                                               choices = c("Rank", "Factor Score", "Tribal Score", "Assessed Last Cycle", "Revenue",
+                                                           "CA Revenue", "OR Revenue", "WA Revenue", "Management Group"),
                                                selected = c("Rank", 
                                                             "Factor Score",
                                                             "Tribal Score",
@@ -590,7 +558,8 @@ shinyUI(
                             "Coloring",
                             br(),
                             checkboxGroupInput("tribal_colors", "Select columns to color:",
-                                               choices = tribal_cols,
+                                               choices = c("Rank", "Factor Score", "Tribal Score", "Assessed Last Cycle", "Revenue",
+                                                           "CA Revenue", "OR Revenue", "WA Revenue", "Management Group"),
                                                selected = c("Rank")
                             )
                           ),
@@ -626,13 +595,14 @@ shinyUI(
                           )
                         ),
                         br(),
-                        selectInput(
-                          inputId = "tribal_species_selector",
-                          label = "Select a species management group:",
-                          choices = c(unique(as.character(species_groups$`Management Group`))),
-                          selected = c(unique(as.character(species_groups$`Management Group`))),
-                          multiple = TRUE
-                        ),
+                        uiOutput("management_groups3"),
+                        #selectInput(
+                        #  inputId = "tribal_species_selector",
+                        #  label = "Select a species management group:",
+                        #  choices = c(unique(as.character(species_groups()$`Management Group`))),
+                        #  selected = c(unique(as.character(species_groups()$`Management Group`))),
+                        #  multiple = TRUE
+                        #),
                         em("To edit your selection, place cursor in the box. Press delete to
                            narrow down your selection."),
                         br(),
@@ -674,7 +644,10 @@ shinyUI(
                             "Columns",
                             br(),
                             checkboxGroupInput("rec_columns", "Select columns to display:",
-                                               choices = rec_cols,
+                                               choices = c("Rank", "Factor Score", "Assessed Last Cycle", "Pseudo Revenue Coastwide",
+                                                           "Pseudo Revenue CA", "Pseudo Revenue OR", "Pseudo Revenue WA", "Species Importance CA",
+                                                           "Species Importance OR", "Species Importance WA", "Catch Coastwide", "Catch CA",
+                                                           "Catch OR", "Catch WA", "Management Group"),
                                                selected = c("Rank", "Factor Score",
                                                             "Pseudo Revenue Coastwide")
                             )
@@ -683,7 +656,10 @@ shinyUI(
                             "Coloring",
                             br(),
                             checkboxGroupInput("rec_colors", "Select columns to color:",
-                                               choices = rec_cols,
+                                               choices = c("Rank", "Factor Score", "Assessed Last Cycle", "Pseudo Revenue Coastwide",
+                                                           "Pseudo Revenue CA", "Pseudo Revenue OR", "Pseudo Revenue WA", "Species Importance CA",
+                                                           "Species Importance OR", "Species Importance WA", "Catch Coastwide", "Catch CA",
+                                                           "Catch OR", "Catch WA", "Management Group"),
                                                selected = c("Rank")
                             )
                           ),
@@ -754,13 +730,14 @@ shinyUI(
                           )
                         ),
                         br(),
-                        selectInput(
-                          inputId = "rec_species_selector",
-                          label = "Select a species management group:",
-                          choices = c(unique(as.character(species_groups$`Management Group`))),
-                          selected = c(unique(as.character(species_groups$`Management Group`))),
-                          multiple = TRUE
-                        ),
+                        uiOutput("management_groups4"),
+                        #selectInput(
+                        #  inputId = "rec_species_selector",
+                        #  label = "Select a species management group:",
+                        #  choices = c(unique(as.character(species_groups()$`Management Group`))),
+                        #  selected = c(unique(as.character(species_groups()$`Management Group`))),
+                        #  multiple = TRUE
+                        #),
                         em("To edit your selection, place cursor in the box. Press delete to
                            narrow down your selection."),
                         br(),
@@ -802,7 +779,8 @@ shinyUI(
                             "Columns",
                             br(),
                             checkboxGroupInput("cd_columns", "Select columns to display:",
-                                               choices = cd_cols,
+                                               choices = c("Rank", "Factor Score", "Choke Stock Score", "Commercial Importance Score",
+                                                           "Recreational Importance Score", "Projected ACL Attainment", "Management Group"),
                                                selected = c("Rank", "Factor Score",
                                                             "Choke Stock Score",
                                                             "Projected ACL Attainment",
@@ -813,7 +791,8 @@ shinyUI(
                             "Coloring",
                             br(),
                             checkboxGroupInput("cd_colors", "Select columns to color:",
-                                               choices = cd_cols,
+                                               choices = c("Rank", "Factor Score", "Choke Stock Score", "Commercial Importance Score",
+                                                           "Recreational Importance Score", "Projected ACL Attainment", "Management Group"),
                                                selected = c("Rank")
                             )
                           ),
@@ -859,13 +838,14 @@ shinyUI(
                           )
                         ),
                         br(),
-                        selectInput(
-                          inputId = "cd_species_selector",
-                          label = "Select a species management group:",
-                          choices = c(unique(as.character(species_groups$`Management Group`))),
-                          selected = c(unique(as.character(species_groups$`Management Group`))),
-                          multiple = TRUE
-                        ),
+                        uiOutput("management_groups5"),
+                        #selectInput(
+                        #  inputId = "cd_species_selector",
+                        #  label = "Select a species management group:",
+                        #  choices = c(unique(as.character(species_groups()$`Management Group`))),
+                        #  selected = c(unique(as.character(species_groups()$`Management Group`))),
+                        #  multiple = TRUE
+                        #),
                         em("To edit your selection, place cursor in the box. Press delete to
                            narrow down your selection."),
                         br(),
@@ -907,7 +887,8 @@ shinyUI(
                             "Columns",
                             br(),
                             checkboxGroupInput("ss_columns", "Select columns to display:",
-                                               choices = ss_cols,
+                                               choices = c("Rank", "Factor Score", "Fraction Unfished", "Target", "MSST", "PSA",
+                                                           "Trend", "Management Group"),
                                                selected = c("Rank", 
                                                             "Factor Score",
                                                             "Fraction Unfished",
@@ -918,7 +899,8 @@ shinyUI(
                             "Coloring",
                             br(),
                             checkboxGroupInput("ss_colors", "Select columns to color:",
-                                               choices = ss_cols,
+                                               choices = c("Rank", "Factor Score", "Fraction Unfished", "Target", "MSST", "PSA",
+                                                           "Trend", "Management Group"),
                                                selected = c("Rank")
                             )
                           ),
@@ -971,13 +953,14 @@ shinyUI(
                           )
                         ),
                         br(),
-                        selectInput(
-                          inputId = "ss_species_selector",
-                          label = "Select a species management group:",
-                          choices = c(unique(as.character(species_groups$`Management Group`))),
-                          selected = c(unique(as.character(species_groups$`Management Group`))),
-                          multiple = TRUE
-                        ),
+                        uiOutput("management_groups6"),
+                        #selectInput(
+                        #  inputId = "ss_species_selector",
+                        #  label = "Select a species management group:",
+                        #  choices = c(unique(as.character(species_groups()$`Management Group`))),
+                        #  selected = c(unique(as.character(species_groups()$`Management Group`))),
+                        #  multiple = TRUE
+                        #),
                         em("To edit your selection, place cursor in the box. Press delete to
                            narrow down your selection."),
                         br(),
@@ -1022,7 +1005,7 @@ shinyUI(
                             "Columns",
                             br(),
                             checkboxGroupInput("reb_columns", "Select columns to display:",
-                                               choices = reb_cols,
+                                               choices = c("Rank", "Factor Score", "Rebuilding Target Group", "Managemeng Group"),
                                                selected = c("Rank", "Factor Score",
                                                             "Rebuilding Target Year")
                             )
@@ -1031,7 +1014,7 @@ shinyUI(
                             "Coloring",
                             br(),
                             checkboxGroupInput("reb_colors", "Select columns to color:",
-                                               choices = reb_cols,
+                                               choices = c("Rank", "Factor Score", "Rebuilding Target Group", "Managemeng Group"),
                                                selected = c("Rank")
                             )
                           ),
@@ -1065,13 +1048,14 @@ shinyUI(
                           )
                         ),
                         br(),
-                        selectInput(
-                          inputId = "reb_species_selector",
-                          label = "Select a species management group:",
-                          choices = c(unique(as.character(species_groups$`Management Group`))),
-                          selected = c(unique(as.character(species_groups$`Management Group`))),
-                          multiple = TRUE
-                        ),
+                        uiOutput("management_groups7"),
+                        #selectInput(
+                        #  inputId = "reb_species_selector",
+                        #  label = "Select a species management group:",
+                        #  choices = c(unique(as.character(species_groups()$`Management Group`))),
+                        #  selected = c(unique(as.character(species_groups()$`Management Group`))),
+                        #  multiple = TRUE
+                        #),
                         em("To edit your selection, place cursor in the box. Press delete to
                            narrow down your selection."),
                         br(),
@@ -1113,7 +1097,9 @@ shinyUI(
                             "Columns",
                             br(),
                             checkboxGroupInput("eco_columns", "Select columns to display:",
-                                               choices = eco_cols,
+                                               choices = c("Rank", "Factor Score",
+                                                           "Top Down Scaled",
+                                                           "Bottom Up Scaled", "Management Group"),
                                                selected = c("Rank", "Factor Score",
                                                             "Top Down Scaled",
                                                             "Bottom Up Scaled")
@@ -1123,7 +1109,9 @@ shinyUI(
                             "Coloring",
                             br(),
                             checkboxGroupInput("eco_colors", "Select columns to color:",
-                                               choices = eco_cols,
+                                               choices = c("Rank", "Factor Score",
+                                                           "Top Down Scaled",
+                                                           "Bottom Up Scaled", "Management Group"),
                                                selected = c("Rank")
                             )
                           ),
@@ -1177,13 +1165,14 @@ shinyUI(
                           )
                         ),
                         br(),
-                        selectInput(
-                          inputId = "eco_species_selector",
-                          label = "Select a species management group:",
-                          choices = c(unique(as.character(species_groups$`Management Group`))),
-                          selected = c(unique(as.character(species_groups$`Management Group`))),
-                          multiple = TRUE
-                        ),
+                        uiOutput("management_groups8"),
+                        #selectInput(
+                        #  inputId = "eco_species_selector",
+                        #  label = "Select a species management group:",
+                        #  choices = c(unique(as.character(species_groups()$`Management Group`))),
+                        #  selected = c(unique(as.character(species_groups()$`Management Group`))),
+                        #  multiple = TRUE
+                        #),
                         em("To edit your selection, place cursor in the box. Press delete to
                            narrow down your selection."),
                         br(),
@@ -1225,7 +1214,12 @@ shinyUI(
                             "Columns",
                             br(),
                             checkboxGroupInput("af_columns", "Select columns to display:",
-                                               choices = af_cols,
+                                               choices = c("Rank", "Factor Score",
+                                                           "Last Assessment Year",
+                                                           "Target Assessment Frequency",
+                                                           "Years Since Assessment", 
+                                                           "Years Past Target Frequency", 
+                                                           "Management Group"),
                                                selected = c("Rank", "Factor Score",
                                                             "Last Assessment Year",
                                                             "Target Assessment Frequency")
@@ -1235,7 +1229,12 @@ shinyUI(
                             "Coloring",
                             br(),
                             checkboxGroupInput("af_colors", "Select columns to display:",
-                                               choices = af_cols,
+                                               choices = c("Rank", "Factor Score",
+                                                           "Last Assessment Year",
+                                                           "Target Assessment Frequency",
+                                                           "Years Since Assessment", 
+                                                           "Years Past Target Frequency", 
+                                                           "Management Group"),
                                                selected = c("Rank")
                             )
                           ),
@@ -1329,13 +1328,14 @@ shinyUI(
                           )
                         ),
                         br(),
-                        selectInput(
-                          inputId = "af_species_selector",
-                          label = "Select a species management group:",
-                          choices = c(unique(as.character(species_groups$`Management Group`))),
-                          selected = c(unique(as.character(species_groups$`Management Group`))),
-                          multiple = TRUE
-                        ),
+                        uiOutput("management_groups9"),
+                        #selectInput(
+                        #  inputId = "af_species_selector",
+                        #  label = "Select a species management group:",
+                        #  choices = c(unique(as.character(species_groups()$`Management Group`))),
+                        #  selected = c(unique(as.character(species_groups()$`Management Group`))),
+                        #  multiple = TRUE
+                        #),
                         em("To edit your selection, place cursor in the box. Press delete to
                            narrow down your selection."),
                         br(),
@@ -1378,7 +1378,9 @@ shinyUI(
                             "Columns",
                             br(),
                             checkboxGroupInput("ni_columns", "Select columns to display:",
-                                               choices = ni_cols,
+                                               choices = c("Rank", "Factor Score", "Last Assessed", "New Research",
+                                                           "Issues Can be Addressed", "Survey Abundance", "Survey Composition",
+                                                           "Management Group"),
                                                selected = c("Rank", 
                                                             "Factor Score", 
                                                             "Last Assessed", 
@@ -1389,7 +1391,9 @@ shinyUI(
                             "Coloring",
                             br(),
                             checkboxGroupInput("ni_colors", "Select columns to color:",
-                                               choices = ni_cols,
+                                               choices = c("Rank", "Factor Score", "Last Assessed", "New Research",
+                                                           "Issues Can be Addressed", "Survey Abundance", "Survey Composition",
+                                                           "Management Group"),
                                                selected = c("Rank")
                             )
                           ),
@@ -1449,13 +1453,14 @@ shinyUI(
                           )
                         ),
                         br(),
-                        selectInput(
-                          inputId = "ni_species_selector",
-                          label = "Select a species management group:",
-                          choices = c(unique(as.character(species_groups$`Management Group`))),
-                          selected = c(unique(as.character(species_groups$`Management Group`))),
-                          multiple = TRUE
-                        ),
+                        uiOutput("management_groups10"),
+                        #selectInput(
+                        #  inputId = "ni_species_selector",
+                        #  label = "Select a species management group:",
+                        #  choices = c(unique(as.character(species_groups()$`Management Group`))),
+                        #  selected = c(unique(as.character(species_groups()$`Management Group`))),
+                        #  multiple = TRUE
+                        #),
                         em("To edit your selection, place cursor in the box. Press delete to
                            narrow down your selection."),
                         br(),
