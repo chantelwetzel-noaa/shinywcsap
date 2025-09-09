@@ -17,7 +17,7 @@ library(plotly)
 # Define UI for application that produces tables + description of variables
 shinyUI(
  fluidPage(
-   
+
    # CSS to format features
    tags$head(
      # right-align HTML files + add margin (methodology page)
@@ -394,13 +394,6 @@ shinyUI(
                         ),
                         br(),
                         uiOutput("management_groups1"),
-                        #selectInput(
-                        #  inputId = "fm_species_selector",
-                        #  label = "Select a species management group:",
-                        #  choices = c(unique(as.character(species_groups()$`Management Group`))),
-                        #  selected = c(unique(as.character(species_groups()$`Management Group`))),
-                        #  multiple = TRUE
-                        #),
                         em("To edit your selection, place cursor in the box. Press delete to
                            narrow down your selection."),
                         br(),
@@ -499,12 +492,6 @@ shinyUI(
                         ),
                         br(),
                         uiOutput("management_groups2"),
-                        #selectInput("com_species_selector",
-                        #            "Select a species management group:",
-                        #            choices = c(unique(as.character(species_groups()$`Management Group`))),
-                        #            selected = c(unique(as.character(species_groups()$`Management Group`))),
-                        #            multiple = TRUE
-                        #),
                         em("To edit your selection, place cursor in the box. Press delete to
                            narrow down your selection."),
                         br(),
@@ -596,13 +583,6 @@ shinyUI(
                         ),
                         br(),
                         uiOutput("management_groups3"),
-                        #selectInput(
-                        #  inputId = "tribal_species_selector",
-                        #  label = "Select a species management group:",
-                        #  choices = c(unique(as.character(species_groups()$`Management Group`))),
-                        #  selected = c(unique(as.character(species_groups()$`Management Group`))),
-                        #  multiple = TRUE
-                        #),
                         em("To edit your selection, place cursor in the box. Press delete to
                            narrow down your selection."),
                         br(),
@@ -731,13 +711,6 @@ shinyUI(
                         ),
                         br(),
                         uiOutput("management_groups4"),
-                        #selectInput(
-                        #  inputId = "rec_species_selector",
-                        #  label = "Select a species management group:",
-                        #  choices = c(unique(as.character(species_groups()$`Management Group`))),
-                        #  selected = c(unique(as.character(species_groups()$`Management Group`))),
-                        #  multiple = TRUE
-                        #),
                         em("To edit your selection, place cursor in the box. Press delete to
                            narrow down your selection."),
                         br(),
@@ -839,13 +812,6 @@ shinyUI(
                         ),
                         br(),
                         uiOutput("management_groups5"),
-                        #selectInput(
-                        #  inputId = "cd_species_selector",
-                        #  label = "Select a species management group:",
-                        #  choices = c(unique(as.character(species_groups()$`Management Group`))),
-                        #  selected = c(unique(as.character(species_groups()$`Management Group`))),
-                        #  multiple = TRUE
-                        #),
                         em("To edit your selection, place cursor in the box. Press delete to
                            narrow down your selection."),
                         br(),
@@ -954,13 +920,6 @@ shinyUI(
                         ),
                         br(),
                         uiOutput("management_groups6"),
-                        #selectInput(
-                        #  inputId = "ss_species_selector",
-                        #  label = "Select a species management group:",
-                        #  choices = c(unique(as.character(species_groups()$`Management Group`))),
-                        #  selected = c(unique(as.character(species_groups()$`Management Group`))),
-                        #  multiple = TRUE
-                        #),
                         em("To edit your selection, place cursor in the box. Press delete to
                            narrow down your selection."),
                         br(),
@@ -1049,13 +1008,6 @@ shinyUI(
                         ),
                         br(),
                         uiOutput("management_groups7"),
-                        #selectInput(
-                        #  inputId = "reb_species_selector",
-                        #  label = "Select a species management group:",
-                        #  choices = c(unique(as.character(species_groups()$`Management Group`))),
-                        #  selected = c(unique(as.character(species_groups()$`Management Group`))),
-                        #  multiple = TRUE
-                        #),
                         em("To edit your selection, place cursor in the box. Press delete to
                            narrow down your selection."),
                         br(),
@@ -1166,13 +1118,6 @@ shinyUI(
                         ),
                         br(),
                         uiOutput("management_groups8"),
-                        #selectInput(
-                        #  inputId = "eco_species_selector",
-                        #  label = "Select a species management group:",
-                        #  choices = c(unique(as.character(species_groups()$`Management Group`))),
-                        #  selected = c(unique(as.character(species_groups()$`Management Group`))),
-                        #  multiple = TRUE
-                        #),
                         em("To edit your selection, place cursor in the box. Press delete to
                            narrow down your selection."),
                         br(),
@@ -1329,13 +1274,6 @@ shinyUI(
                         ),
                         br(),
                         uiOutput("management_groups9"),
-                        #selectInput(
-                        #  inputId = "af_species_selector",
-                        #  label = "Select a species management group:",
-                        #  choices = c(unique(as.character(species_groups()$`Management Group`))),
-                        #  selected = c(unique(as.character(species_groups()$`Management Group`))),
-                        #  multiple = TRUE
-                        #),
                         em("To edit your selection, place cursor in the box. Press delete to
                            narrow down your selection."),
                         br(),
@@ -1454,13 +1392,6 @@ shinyUI(
                         ),
                         br(),
                         uiOutput("management_groups10"),
-                        #selectInput(
-                        #  inputId = "ni_species_selector",
-                        #  label = "Select a species management group:",
-                        #  choices = c(unique(as.character(species_groups()$`Management Group`))),
-                        #  selected = c(unique(as.character(species_groups()$`Management Group`))),
-                        #  multiple = TRUE
-                        #),
                         em("To edit your selection, place cursor in the box. Press delete to
                            narrow down your selection."),
                         br(),
