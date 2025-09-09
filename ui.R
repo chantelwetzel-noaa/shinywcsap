@@ -137,7 +137,7 @@ shinyUI(
                   and population attributes."),
                   tags$footer(
                     style = "text-align: center;",
-                    HTML(paste0("<img src='figs/sap.png' alt='Image 1',
+                    HTML(paste0("<img src='figs/sap.png' alt='Artistic log for stock assessment prioritization',
                                 height='500' style='margin-right: 15px;'>"))
                   )#,
                   #tags$footer(
@@ -1424,20 +1424,24 @@ shinyUI(
           
           # stock assessment calendar page
           tabItem(tabName = "calendar",
-                  h1("2025 Groundfish Assessment Calendar"),
+                  h1("Groundfish Assessment Calendar"),
                   fluidRow(
                     box(
                       width = 12,
-                      h4("The 2025 groundfish assessment planning calendar identifies potential weeks 
+                      height = 0,
+                      h4("The groundfish assessment planning calendar identifies potential weeks 
                          in which Stock Assessment Review (STAR) panels could potentially 
-                         be scheduled. Based on the expected availability of 2024 data and 
+                         be scheduled. Based on the expected data availability and 
                          the time needed for model development and documentation, it is 
                          unlikely that a STAR panel could be held any earlier in April."),
                       br(),
                       div(
-                        img(src = "figs/calendar.png", height = "800px", width = "800px",
-                            style = "display: block; margin-left: auto; margin-right: auto;")
+                        imageOutput("calendar")
                       ),
+                      #div(
+                      #  img(src = "figs/2024/calendar.png", height = "800px", width = "800px",
+                      #      style = "display: block; margin-left: auto; margin-right: auto;")
+                      #),
                       br()
                     )
                   ),

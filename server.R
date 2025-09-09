@@ -34,6 +34,22 @@ shinyServer(function(input, output, session) {
     species_groups
     })
   
+  output$calendar <- renderImage({ 
+    req(input$yr)
+    image <- paste0("www/figs/", input$yr, "/calendar.png")
+    width <- "600px"
+    height <- "600px"
+    list(
+      src = image, 
+      alt = "Calendar",
+      contentType = "image/png", 
+      width = width, 
+      height = height,
+      style = "display: block; margin-left: auto; margin-right: auto;"
+    )
+  }, deleteFile = FALSE)
+
+  
   output$management_groups1 <- renderUI({
     if(!is.null(species_groups)) {
       management_groups1 <- unique(as.character(species_groups()$`Management Group`))
