@@ -155,45 +155,51 @@ shinyServer(function(input, output, session) {
       )
     }
   })
-  
-  #fish_mort_data <- reactive({
-  #  req(input$yr)
-  #  fish_mort_data <- readr::read_csv(here::here("tables", 2026, "1_fishing_mortality.csv"))
-  #  fish_mort_data
-  #})
-  
+
   fish_mort_data <- reactive({
-    fish_mort_data <- readr::read_csv(here::here("tables", 2026, "1_fishing_mortality.csv"), show_col_types = FALSE)
+    req(input$yr)
+    fish_mort_data <- readr::read_csv(here::here("tables", input$yr, "1_fishing_mortality.csv"), show_col_types = FALSE)
     fish_mort_data})
   com_rev_data <- reactive({
-    com_rev_data <- readr::read_csv(here::here("tables", 2026, "2_commercial_revenue.csv"), show_col_types = FALSE) 
+    req(input$yr)
+    com_rev_data <- readr::read_csv(here::here("tables", input$yr, "2_commercial_revenue.csv"), show_col_types = FALSE) 
     com_rev_data})
   tribal_data <- reactive({
-    tribal_data <- readr::read_csv(here::here("tables", 2026, "3_tribal_revenue.csv"), show_col_types = FALSE) 
+    req(input$yr)
+    tribal_data <- readr::read_csv(here::here("tables", input$yr, "3_tribal_revenue.csv"), show_col_types = FALSE) 
     tribal_data})
   rec_data <- reactive({
-    rec_data <- readr::read_csv(here::here("tables", 2026, "4_recreational_importance.csv"), show_col_types = FALSE) 
+    req(input$yr)
+    rec_data <- readr::read_csv(here::here("tables", input$yr, "4_recreational_importance.csv"), show_col_types = FALSE) 
     rec_data})
   eco_data <- reactive({
-    eco_data <- readr::read_csv(here::here("tables", 2026, "5_ecosystem.csv"), show_col_types = FALSE) 
+    req(input$yr)
+    eco_data <- readr::read_csv(here::here("tables", input$yr, "5_ecosystem.csv"), show_col_types = FALSE) 
     eco_data})
   stock_stat_data <- reactive({
-    stock_stat_data <- readr::read_csv(here::here("tables", 2026, "6_stock_status.csv"), show_col_types = FALSE) 
+    req(input$yr)
+    stock_stat_data <- readr::read_csv(here::here("tables", input$yr, "6_stock_status.csv"), show_col_types = FALSE) 
     stock_stat_data})
   assess_freq_data <- reactive({
-    assess_freq_data <- readr::read_csv(here::here("tables", 2026, "7_assessment_frequency.csv"), show_col_types = FALSE) 
+    req(input$yr)
+    assess_freq_data <- readr::read_csv(here::here("tables", input$yr, "7_assessment_frequency.csv"), show_col_types = FALSE) 
     assess_freq_data})
   const_dem_data <- reactive({
-    const_dem_data <- readr::read_csv(here::here("tables", 2026, "8_constituent_demand.csv"), show_col_types = FALSE)
+    req(input$yr)
+    const_dem_data <- readr::read_csv(here::here("tables", input$yr, "8_constituent_demand.csv"), show_col_types = FALSE)
     const_dem_data})
   new_info_data <- reactive({
-    new_info_data <- readr::read_csv(here::here("tables", 2026, "9_new_information.csv"), show_col_types = FALSE) 
+    req(input$yr)
+    new_info_data <- readr::read_csv(here::here("tables", input$yr, "9_new_information.csv"), show_col_types = FALSE) 
     new_info_data})
   rebuilding_data <- reactive({
-    rebuilding_data <- readr::read_csv(here::here("tables", 2026, "10_rebuilding.csv"), show_col_types = FALSE) 
+    req(input$yr)
+    rebuilding_data <- readr::read_csv(here::here("tables", input$yr, "10_rebuilding.csv"), show_col_types = FALSE) 
     rebuilding_data})
   year_assessed <- reactive({
-    year_assessed <- assess_freq_data[,"Last Assessment Year"] 
+    req(assess_freq_data)
+    year_assessed <- as.data.frame(assess_freq_data()[,"Last Assessment Year"]) 
+    colnames(year_assessed) <- NULL
     year_assessed
   })
   
@@ -337,19 +343,54 @@ shinyServer(function(input, output, session) {
   })
   
   # add factor weights
-  comm_weight <- reactive(input$comm_weight)
-  rec_weight <- reactive(input$rec_weight)
-  tribal_weight <- reactive(input$tribal_weight)
-  cd_weight <- reactive(input$cd_weight)
-  reb_weight <- reactive(input$reb_weight)
-  ss_weight <- reactive(input$ss_weight)
-  fm_weight <- reactive(input$fm_weight)
-  eco_weight <- reactive(input$eco_weight)
-  ni_weight <- reactive(input$ni_weight)
-  af_weight <- reactive(input$af_weight)
-  sum_weights <- reactive(round(comm_weight() + rec_weight() + tribal_weight() +
+  comm_weight <- reactive({
+    req(input$comm_weight)
+    comm_weight <- input$comm_weight
+    comm_weight
+  })
+  rec_weight <- reactive({
+    req(input$rec_weight)
+    rec_weight <- input$rec_weight
+    rec_weight
+  })
+  tribal_weight <- reactive({
+    req(tribal_weight)
+    tribal_weight <- input$tribal_weight
+    tribal_weight})
+  cd_weight <- reactive({
+    req(cd_weight)
+    cd_weight <- input$cd_weight
+    cd_weight})
+  reb_weight <- reactive({
+    req(reb_weight)
+    reb_weight <- input$reb_weight
+    reb_weight})
+  ss_weight <- reactive({
+    req(ss_weight)
+    ss_weight <- input$ss_weight
+    ss_weight})
+  fm_weight <- reactive({
+    req(fm_weight)
+    fm_weight <- input$fm_weight
+    fm_weight})
+  eco_weight <- reactive({
+    req(eco_weight)
+    eco_weight <- input$eco_weight
+    eco_weight})
+  ni_weight <- reactive({
+    req(ni_weight)
+    ni_weight <- input$ni_weight
+    ni_weight})
+  af_weight <- reactive({
+    req(af_weight)
+    af_weight <- input$af_weight
+    af_weight})
+  sum_weights <- reactive({
+    sum_weights <- round(comm_weight() + rec_weight() + tribal_weight() +
                                 cd_weight() + reb_weight() + ss_weight() + fm_weight() +
-                                eco_weight() + ni_weight() + af_weight(), 3))
+                                eco_weight() + ni_weight() + af_weight(), 3)
+    sum_weights
+  })
   
   # display sum of factor weights
   output$weights_sum <- renderText({
@@ -363,6 +404,9 @@ shinyServer(function(input, output, session) {
     }
   })
   
+  output$test <- renderPrint({
+    overall_data()
+  })
   # reset weights if button is pressed
   observeEvent(input$reset, {
     updateNumericInput(session, "comm_weight", value = 0.21)
@@ -433,19 +477,19 @@ shinyServer(function(input, output, session) {
       rank = NA, #2
       last_assessed = year_assessed(), #3
       total = NA, #4
-      com_rev_fs_weight <- results()$com_rev_fs * comm_weight(), #5
-      rec_fs_weight <- results()$rec_fs* rec_weight(), #6
-      tribal_fs_weight <- results()$tribal_fs * tribal_weight(), #7
-      const_dem_fs_weight <- results()$const_dem_fs * cd_weight(), #8
-      reb_fs_weight <- results()$reb_fs * reb_weight(), #9
-      ss_fs_weight <- results()$ss_fs * ss_weight(), #10
-      fish_mort_fs_weight <- results()$fish_mort_fs * fm_weight(), #11
-      eco_fs_weight <- results()$eco_fs * eco_weight(), #12
-      new_info_fs_weight <- results()$new_info_fs * ni_weight(), #13
-      assess_fs_weight <- results()$assess_fs. * af_weight() #14
+      com_rev_fs_weight = results()$com_rev_fs * comm_weight(), #5
+      rec_fs_weight = results()$rec_fs* rec_weight(), #6
+      tribal_fs_weight = results()$tribal_fs * tribal_weight(), #7
+      const_dem_fs_weight = results()$const_dem_fs * cd_weight(), #8
+      reb_fs_weight = results()$reb_fs * reb_weight(), #9
+      ss_fs_weight = results()$ss_fs * ss_weight(), #10
+      fish_mort_fs_weight = results()$fish_mort_fs * fm_weight(), #11
+      eco_fs_weight = results()$eco_fs * eco_weight(), #12
+      new_info_fs_weight = results()$new_info_fs * ni_weight(), #13
+      assess_fs_weight = results()$assess_fs * af_weight() #14
     )
     # create column with weighted sum
-    overall_data$total <- rowSums(overall_data[,5:ncols(overall_data)])
+    overall_data$total <- rowSums(overall_data[,5:ncol(overall_data)])
     
     overall_data <- overall_data |>
       arrange(desc(total))
@@ -462,7 +506,6 @@ shinyServer(function(input, output, session) {
                            "Tribal Importance", "Constituent Demand", "Rebuilding",
                            "Stock Status", "Fishing Mortality", "Ecosystem",
                            "New Information", "Assessment Frequency")
-    
     overall_data
   })
   
@@ -544,7 +587,7 @@ shinyServer(function(input, output, session) {
 
   # overall ranking plot
   output$overall_ranking <- renderPlotly({
-    req(overall_data())
+    req(overall_data)
     
     if(sum_weights() == 1.00) {
       # reshape dataframe

@@ -296,6 +296,7 @@ shinyUI(
                         solidHeader = TRUE, collapsible = TRUE,
                         width = 12,
                         uiOutput("overall_gt_table") %>% withSpinner(),
+                        #uiOutput("test") %>% withSpinner(),
                         div(style = "display:inline-block",
                             downloadButton("overall_csv", "Download CSV")
                         ),
