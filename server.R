@@ -584,6 +584,7 @@ shinyServer(function(input, output, session) {
 
   # create reactive dataframe (commercial importance)
   reactive_com_df <- reactive({
+    req(com_rev_data)
     # filter data down to selected species + columns
     reactive_com_df <- com_rev_data()[com_rev_data()$`Management Group` %in% input$com_species_selector,]
     reactive_com_df <- com_rev_data() |>
@@ -594,7 +595,7 @@ shinyServer(function(input, output, session) {
   
   # commercial importance table
   output$com_gt_table <- render_gt({
-    req(com_rev_data)
+    req(reactive_com_df)
   
     com_table <- reactive_com_df() |>
       gt() |>
@@ -700,7 +701,7 @@ shinyServer(function(input, output, session) {
   output$com_ranking <- renderPlotly({
     req(com_rev_data)
     
-    com_plot <- create_base_plot(com_rev_data) +
+    com_plot <- create_base_plot(com_rev_data()) +
       labs(
         title = "Fish Species Ranking by Commercial Importance",
         x = "Species (in alphabetical order)", y = "Rank", color = "Management Group")
@@ -800,7 +801,7 @@ shinyServer(function(input, output, session) {
   output$rec_species_ranking <- renderPlotly({
     req(rec_data)
     
-    rec_plot <- create_base_plot(rec_data) +
+    rec_plot <- create_base_plot(rec_data()) +
       labs(
         title = "Fish Species Ranking by Recreational Importance",
         x = "Species (in alphabetical order)", y = "Rank", color = "Management Group")
@@ -902,7 +903,7 @@ shinyServer(function(input, output, session) {
   output$tribal_species_ranking <- renderPlotly({
     req(tribal_data)
     
-    tribal_plot <- create_base_plot(tribal_data) +
+    tribal_plot <- create_base_plot(tribal_data()) +
       labs(
         title = "Fish Species Ranking by Tribal Importance",
         x = "Species (in alphabetical order)", y = "Rank", color = "Management Group")
@@ -1028,7 +1029,7 @@ shinyServer(function(input, output, session) {
   output$cd_species_ranking <- renderPlotly({
     req(const_dem_data)
     
-    cd_plot <- create_base_plot(const_dem_data) +
+    cd_plot <- create_base_plot(const_dem_data()) +
       labs(
         title = "Fish Species Ranking by Constituent Demand",
         x = "Species (in alphabetical order)", y = "Rank", color = "Management Group")
@@ -1118,7 +1119,7 @@ shinyServer(function(input, output, session) {
   output$reb_species_ranking <- renderPlotly({
     req(rebuilding_data)
   
-    reb_plot <- ggplot(rebuilding_data, aes(x = Species, y = `Factor Score`,
+    reb_plot <- ggplot(rebuilding_data(), aes(x = Species, y = `Factor Score`,
                                           text = paste0("Species: ", Species,
                                                         "\nFactor Score: ",
                                                         round(`Factor Score`, digits = 2),
@@ -1237,7 +1238,7 @@ shinyServer(function(input, output, session) {
   output$ss_species_ranking <- renderPlotly({
     req(stock_stat_data)
     
-    ss_plot <- ggplot(stock_stat_data, aes(x = Species, y = Rank,
+    ss_plot <- ggplot(stock_stat_data(), aes(x = Species, y = Rank,
                                         text = paste0("Species: ", Species,
                                                       "\nRank: ", Rank,
                                                       "\nFactor Score: ",
@@ -1377,7 +1378,7 @@ shinyServer(function(input, output, session) {
   output$fm_species_ranking <- renderPlotly({
     req(fish_mort_data)
     
-    fm_plot <- create_base_plot(fish_mort_data) +
+    fm_plot <- create_base_plot(fish_mort_data()) +
       labs(
         title = "Fish Species Ranking by Fishing Mortality",
         x = "Species (in alphabetical order)", y = "Rank", color = "Management Group")
@@ -1475,7 +1476,7 @@ shinyServer(function(input, output, session) {
   output$eco_species_ranking <- renderPlotly({
     req(eco_data)
     
-    eco_plot <- create_base_plot(eco_data) +
+    eco_plot <- create_base_plot(eco_data()) +
       labs(
         title = "Fish Species Ranking by Ecosystem",
         x = "Species (in alphabetical order)", y = "Rank", color = "Management Group")
@@ -1570,7 +1571,7 @@ shinyServer(function(input, output, session) {
   output$ni_species_ranking <- renderPlotly({
     req(new_info_data)
     
-    ni_plot <- ggplot(new_info_data, aes(x = Species, y = Rank,
+    ni_plot <- ggplot(new_info_data(), aes(x = Species, y = Rank,
                                         text = paste0("Species: ", Species,
                                                       "\nRank: ", Rank,
                                                       "\nFactor Score: ",
@@ -1681,7 +1682,7 @@ shinyServer(function(input, output, session) {
   output$af_species_ranking <- renderPlotly({
     req(assess_freq_data)
     
-    af_plot <- ggplot(assess_freq_data, aes(x = Species, y = Rank,
+    af_plot <- ggplot(assess_freq_data(), aes(x = Species, y = Rank,
                                         text = paste0("Species: ", Species,
                                                       "\nRank: ", Rank,
                                                       "\nFactor Score: ",
