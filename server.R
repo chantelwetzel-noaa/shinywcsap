@@ -30,7 +30,7 @@ shinyServer(function(input, output, session) {
 
   species_groups <- reactive({
     req(input$yr)
-    species_groups <- readr::read_csv(here::here("tables", input$yr, "species_management_groups.csv")) 
+    species_groups <- readr::read_csv(here::here("tables", input$yr, "species_management_groups.csv"), show_col_types = FALSE) 
     species_groups
     })
   
@@ -163,38 +163,80 @@ shinyServer(function(input, output, session) {
   #})
   
   fish_mort_data <- reactive({
-    fish_mort_data <- readr::read_csv(here::here("tables", 2026, "1_fishing_mortality.csv"))
+    fish_mort_data <- readr::read_csv(here::here("tables", 2026, "1_fishing_mortality.csv"), show_col_types = FALSE)
     fish_mort_data})
   com_rev_data <- reactive({
-    com_rev_data <- readr::read_csv(here::here("tables", 2026, "2_commercial_revenue.csv")) 
+    com_rev_data <- readr::read_csv(here::here("tables", 2026, "2_commercial_revenue.csv"), show_col_types = FALSE) 
     com_rev_data})
   tribal_data <- reactive({
-    tribal_data <- readr::read_csv(here::here("tables", 2026, "3_tribal_revenue.csv")) 
+    tribal_data <- readr::read_csv(here::here("tables", 2026, "3_tribal_revenue.csv"), show_col_types = FALSE) 
     tribal_data})
   rec_data <- reactive({
-    rec_data <- readr::read_csv(here::here("tables", 2026, "4_recreational_importance.csv")) 
+    rec_data <- readr::read_csv(here::here("tables", 2026, "4_recreational_importance.csv"), show_col_types = FALSE) 
     rec_data})
   eco_data <- reactive({
-    eco_data <- readr::read_csv(here::here("tables", 2026, "5_ecosystem.csv")) 
+    eco_data <- readr::read_csv(here::here("tables", 2026, "5_ecosystem.csv"), show_col_types = FALSE) 
     eco_data})
   stock_stat_data <- reactive({
-    stock_stat_data <- readr::read_csv(here::here("tables", 2026, "6_stock_status.csv")) 
+    stock_stat_data <- readr::read_csv(here::here("tables", 2026, "6_stock_status.csv"), show_col_types = FALSE) 
     stock_stat_data})
   assess_freq_data <- reactive({
-    assess_freq_data <- readr::read_csv(here::here("tables", 2026, "7_assessment_frequency.csv")) 
+    assess_freq_data <- readr::read_csv(here::here("tables", 2026, "7_assessment_frequency.csv"), show_col_types = FALSE) 
     assess_freq_data})
   const_dem_data <- reactive({
-    const_dem_data <- readr::read_csv(here::here("tables", 2026, "8_constituent_demand.csv"))
+    const_dem_data <- readr::read_csv(here::here("tables", 2026, "8_constituent_demand.csv"), show_col_types = FALSE)
     const_dem_data})
   new_info_data <- reactive({
-    new_info_data <- readr::read_csv(here::here("tables", 2026, "9_new_information.csv")) 
+    new_info_data <- readr::read_csv(here::here("tables", 2026, "9_new_information.csv"), show_col_types = FALSE) 
     new_info_data})
   rebuilding_data <- reactive({
-    rebuilding_data <- readr::read_csv(here::here("tables", 2026, "10_rebuilding.csv")) 
+    rebuilding_data <- readr::read_csv(here::here("tables", 2026, "10_rebuilding.csv"), show_col_types = FALSE) 
     rebuilding_data})
-  assessed <- reactive({
-    assessed <- assess_freq_data[,"Last Assessment Year"] 
-    assessed
+  year_assessed <- reactive({
+    year_assessed <- assess_freq_data[,"Last Assessment Year"] 
+    year_assessed
+  })
+  
+  # results <- reactive({
+  #   results <- data.frame(
+  #     species = com_rev_data$Species,
+  #     com_rev_fs = com_rev_data$`Factor Score`,
+  #     rec_fs = rec_data$`Factor Score`,
+  #     tribal_fs = tribal_data$`Factor Score`,
+  #     const_dem_fs = const_dem_data$`Factor Score`,
+  #     reb_fs = rebuilding_data$`Factor Score`,
+  #     ss_fs = stock_stat_data$`Factor Score`,
+  #     fish_mort_fs = fish_mort_data$`Factor Score`,
+  #     eco_fs = eco_data$`Factor Score`,
+  #     new_info_fs = new_info_data$`Factor Score`,
+  #     assess_fs = assess_freq_data$`Factor Score`)
+  #   results
+  # })
+  
+  # create overall ranking table
+  results <- reactive({
+    join_cols <- c("Species", "Factor Score")
+    results <- dplyr::left_join(
+      dplyr::left_join(
+        dplyr::left_join(
+          dplyr::left_join(
+            dplyr::left_join(
+              dplyr::left_join(
+                dplyr::left_join(
+                  dplyr::left_join(
+                    dplyr::left_join(com_rev_data()[, join_cols], rec_data()[, join_cols], by = "Species"),
+                    tribal_data()[, join_cols], by = "Species"),
+                  const_dem_data()[, join_cols], by = "Species"),
+                rebuilding_data()[, join_cols], by = "Species"),
+              stock_stat_data()[, join_cols], by = "Species"),
+            fish_mort_data()[, join_cols], by = "Species"),
+          eco_data()[, join_cols], by = "Species"),
+        new_info_data()[, join_cols], by = "Species"),
+      assess_freq_data()[, join_cols], by = "Species")
+    colnames(results) <- c("species", "com_rev_fs", "rec_fs", "tribal_fs", "const_dem_fs", "reb_fs", "ss_fs",
+                           "fish_mort_fs", "eco_fs", "new_info_fs", "assess_fs")
+    results <- as.data.frame(results)
+    results
   })
   
   # render HTML files for methodology page
@@ -294,21 +336,6 @@ shinyServer(function(input, output, session) {
                 style = "border:none;")
   })
   
-  # create overall ranking table
-  results <- reactive({
-    results <- data.frame(species_groups()$Species,
-                        com_rev_data()$`Factor Score`,
-                        rec_data()$`Factor Score`,
-                        tribal_data()$`Factor Score`,
-                        const_dem_data()$`Factor Score`,
-                        rebuilding_data()$`Factor Score`,
-                        stock_stat_data()$`Factor Score`,
-                        fish_mort_data()$`Factor Score`,
-                        eco_data()$`Factor Score`,
-                        new_info_data()$`Factor Score`,
-                        assess_freq_data()$`Factor Score`)
-  })
-  
   # add factor weights
   comm_weight <- reactive(input$comm_weight)
   rec_weight <- reactive(input$rec_weight)
@@ -401,54 +428,52 @@ shinyServer(function(input, output, session) {
   
   # create reactive dataframe (used for overall table + plot)
   overall_data <- reactive({
-    # multiply factor scores with weights
-    results$com_rev_data.Factor.Score <- results$com_rev_data..Factor.Score. * comm_weight()
-    results$rec_data.Factor_Score <- results$rec_data..Factor.Score. * rec_weight()
-    results$tribal_data.Factor_Score <- results$tribal_data..Factor.Score. * tribal_weight()
-    results$const_dem_data.Factor_Score <- results$const_dem_data..Factor.Score. * cd_weight()
-    results$rebuilding_data.Factor_Score <- results$rebuilding_data..Factor.Score. * reb_weight()
-    results$stock_stat_data.Factor_Score <- results$stock_stat_data..Factor.Score. * ss_weight()
-    results$fish_mort_data.Factor_Score <- results$fish_mort_data..Factor.Score. * fm_weight()
-    results$eco_data.Factor_Score <- results$eco_data..Factor.Score. * eco_weight()
-    results$new_info_data.Factor_Score <- results$new_info_data..Factor.Score. * ni_weight()
-    results$assess_freq_data.Factor_Score <- results$assess_freq_data..Factor.Score. * af_weight()
-    
+    overall_data <- data.frame(
+      species = results()$species, #1
+      rank = NA, #2
+      last_assessed = year_assessed(), #3
+      total = NA, #4
+      com_rev_fs_weight <- results()$com_rev_fs * comm_weight(), #5
+      rec_fs_weight <- results()$rec_fs* rec_weight(), #6
+      tribal_fs_weight <- results()$tribal_fs * tribal_weight(), #7
+      const_dem_fs_weight <- results()$const_dem_fs * cd_weight(), #8
+      reb_fs_weight <- results()$reb_fs * reb_weight(), #9
+      ss_fs_weight <- results()$ss_fs * ss_weight(), #10
+      fish_mort_fs_weight <- results()$fish_mort_fs * fm_weight(), #11
+      eco_fs_weight <- results()$eco_fs * eco_weight(), #12
+      new_info_fs_weight <- results()$new_info_fs * ni_weight(), #13
+      assess_fs_weight <- results()$assess_fs. * af_weight() #14
+    )
     # create column with weighted sum
-    results$total <- rowSums(results[2:11])
-    results$assessed <- assessed
+    overall_data$total <- rowSums(overall_data[,5:ncols(overall_data)])
     
-    results <- results |>
+    overall_data <- overall_data |>
       arrange(desc(total))
     
     # create rank column
-    results$rank <- NA
-    order_totals <- order(results$total, results$species_groups.Species, 
+    #overall_data$rank <- NA
+    order_totals <- order(overall_data$total, overall_data$species, 
                           decreasing = TRUE)
-    results$rank[order_totals] <- 1:nrow(results)
-    
-    # order columns in table
-    results <- results |>
-      select(species_groups.Species, rank, assessed, total,
-             com_rev_data..Factor.Score.:assess_freq_data..Factor.Score.)
-    
+    overall_data$rank[order_totals] <- 1:nrow(overall_data)
+
     # rename columns in table
-    colnames(results) <- c("Species", "Rank", "Last Assessed", "Weighted Total Score",
+    colnames(overall_data) <- c("Species", "Rank", "Last Assessed", "Weighted Total Score",
                            "Commercial Importance", "Recreational Importance",
                            "Tribal Importance", "Constituent Demand", "Rebuilding",
                            "Stock Status", "Fishing Mortality", "Ecosystem",
                            "New Information", "Assessment Frequency")
     
-    results
+    overall_data
   })
   
   
   # overall ranking table
   output$overall_gt_table <- renderUI({
-    req(overall_data())
+    req(overall_data)
     
     # create table if weights sum to 1
     if(sum_weights() == 1.00) {
-      overall_table <- overall_data() |>
+      overall_gt_table <- overall_data() |>
         gt() |>
         tab_header(
           title = "Overall Factor Summary",
@@ -478,14 +503,11 @@ shinyServer(function(input, output, session) {
                   locations = cells_body(columns = `Weighted Total Score`)) |>
         opt_interactive(use_search = TRUE,
                         use_highlight = TRUE,
-                        use_page_size_select = TRUE)
-      
-      # color cells of columns
-      overall_table <- overall_table |>
+                        use_page_size_select = TRUE) |>
         data_color(columns = 4:14, method = "numeric",
                    palette = "Greys", reverse = TRUE)
       
-      overall_table
+      overall_gt_table
     }
   })
   
