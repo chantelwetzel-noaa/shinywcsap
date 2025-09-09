@@ -1457,6 +1457,7 @@ shinyUI(
                         tabPanel(
                           "Background Information",
                           br(),
+                          h3("National Stock Assessment Prioritization Guidance"),
                           tags$ul(
                             class = "custom-bulleted-list",
                             tags$li(
@@ -1468,8 +1469,16 @@ shinyUI(
                           tags$ul(
                             class = "custom-bulleted-list",
                             tags$li(
-                              tags$a(#href="",
-                                     target = "_blank", "Coming soon")
+                              tags$a(href="https://www.pcouncil.org/documents/2024/05/f-3-attachment-1.pdf/",
+                                     target = "_blank", "Background summary")
+                            ),
+                            tags$li(
+                              tags$a(href="https://www.pcouncil.org/documents/2024/05/f-3-attachment-2.pdf/",
+                                     target = "_blank", "Summary of available data to support U.S. West Coast groundfish stock assessments")
+                            ),
+                            tags$li(
+                              tags$a(href="https://www.pcouncil.org/documents/2024/06/f-3-a-supplemental-nmfs-presentation-1.pdf/",
+                                     target = "_blank", "Presentation to the PFMC")
                             )
                           ),
                           h3("2024 - PFMC March Briefing Book Materials"),
@@ -1507,6 +1516,14 @@ shinyUI(
                         ),
                         tabPanel(
                           "PFMC Decisions",
+                          h3("2024"),
+                          tags$ul(
+                            class = "custom-bulleted-list",
+                            tags$li(
+                              tags$a(href="https://www.pcouncil.org/june-2024-decision-summary-document/",
+                                     target = "_blank", "June 2024 Decision Summary Document")
+                            )
+                          ),
                           h3("2022"),
                           tags$ul(
                             class = "custom-bulleted-list",
