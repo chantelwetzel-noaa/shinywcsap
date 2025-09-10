@@ -76,15 +76,15 @@ shinyUI(
                          menuItem("Home", tabName = "home", icon = icon("home")),
                          menuItem("Methodology", tabName = "methodology",
                                   icon = icon("list-check")),
-                         fluidRow(
-                           column(width = 9, 
-                                  selectInput(inputId = "yr", "Year", choices = c("2024", "2026")) 
-                           ),
-                           column(width = 6, 
-                                  menuItem("Overall Ranking:",
-                                                      tabName = "overall_ranking", icon = icon("ranking-star"))
-                           )
-                         ),
+                         menuItem("Select Year:", icon = icon("calendar-xmark"),
+                            selectInput(inputId = "yr", "", choices = c("2026", "2024"))), 
+                         #fluidRow(
+                        #   column(width = 10, 
+                        #          menuItem("Select Year:", icon = icon("calendar-xmark")),
+                        #          selectInput(inputId = "yr", "", choices = c("2024", "2026")) 
+                        #   ),
+                        # ),
+                         menuItem("Overall Ranking:", tabName = "overall_ranking", icon = icon("ranking-star")),
                          menuItem("Factors", tabName = "factors", icon = icon("table"),
                                   menuSubItem("Fishing Mortality", tabName = "fm_page",
                                               icon = icon("ship")),
