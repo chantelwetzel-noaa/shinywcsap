@@ -564,7 +564,7 @@ shinyServer(function(input, output, session) {
           `New Information` = "New Information Factor Score",
           `Assessment Frequency` = "Assmt. Frequency Factor Score"
         ) |>
-        fmt_number(columns = -c("Rank"), decimals = 2) |>
+        fmt_number(columns = -c("Rank", "Last Assessed"), decimals = 2) |>
         tab_style(style = list(cell_text(weight = "bold")),
                   locations = cells_body(columns = c("Species", "Rank"))
         ) |>
