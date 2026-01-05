@@ -15,21 +15,21 @@ colnames(abund) <- c("Score", "Stock Status")
 
 abund[1,]  = c(1, "Species abundance is well above the target ($SO > 2*SO_{\\text{PROXY}}$)." )
 abund[2,]  = c(2, "Species abundance is above the target ($2*SO_{\\text{PROXY}}$ $\\ge SO > 1.5*SO_{\\text{PROXY}}$).")
-abund[3,]  = c(3, "Species abundance is above the target ($1.5*SO_{\\text{PROXY}} \\ge SO > 1.1*SO_{\\text{PROXY}}$) or abundance is unknown and vulnerability is low (1.8 $>$ PSA).")
-abund[4,]  = c(4, "Species abundance is near the target ($1.1*SO_{\\text{PROXY}} \\ge SO > 0.9*SO_{\\text{PROXY}}$), or is unknown and vulnerability is intermediate (2 $>$ PSA $\\ge$ 1.8).")
-abund[5,]  = c(5, "Species abundance is below the target ($0.9*SO_{\\text{PROXY}} \\ge SO > \\text{MSST}$) and is not declining.")
-abund[6,]  = c(6, "Species abundance is unknown and the vulnerability is high (PSA $>$ 2).")
-abund[7,]  = c(7, "Species abundance is below the target ($0.9*SO_{\\text{PROXY}} \\ge SO > \\text{MSST}$) and is declining or recent trend unknown.")
-abund[8,]  = c(8, "Species is overfished ($SO \\le \\text{MSST}$) and increasing.")
-abund[9,]  = c(9, "Species is overfished ($SO \\le \\text{MSST}$) and stable.")
+abund[3,]  = c(4, "Species abundance is above the target ($1.5*SO_{\\text{PROXY}} \\ge SO > 1.1*SO_{\\text{PROXY}}$) or abundance is unknown and vulnerability is low (1.8 $>$ PSA).")
+abund[4,]  = c(5, "Species abundance is below the target ($0.9*SO_{\\text{PROXY}} \\ge SO > \\text{MSST}$) and is not declining.")
+abund[5,]  = c(6, "Species abundance is near the target ($1.1*SO_{\\text{PROXY}} \\ge SO > 0.9*SO_{\\text{PROXY}}$), or is unknown and vulnerability is intermediate (2 $>$ PSA $\\ge$ 1.8).")
+abund[6,]  = c(7, "Species abundance is below the target ($0.9*SO_{\\text{PROXY}} \\ge SO > \\text{MSST}$) and is declining or recent trend unknown.")
+abund[7,]  = c(8, "Species is overfished ($SO \\le \\text{MSST}$) and increasing.")
+abund[8,]  = c(9, "Species is overfished ($SO \\le \\text{MSST}$) and stable.")
+abund[9,]  = c(9, "Species abundance is unknown and the vulnerability is high (PSA $>$ 2).")
 abund[10,] = c(10, "Species is overfished ($SO \\le \\text{MSST}$) and decreasing.")
 
 
-abund_tbl <- abund %>%
-  gt() %>%
+abund_tbl <- abund |>
+  gt() |>
   tab_header(
     title = "Table 5: Factor sores applied based the estimated fraction of unfished spawning output (SO) relative to management targets from the most recent assessment or the PSA score for un-assessed species."
-  ) %>%
+  ) |>
   cols_align(
     align = "left",
     columns = everything()
@@ -48,19 +48,19 @@ psa <- read.csv("tables/psa.csv", header = TRUE)
 psa <- psa[-c(2)]
 colnames(psa) <- c("Species", "PSA Score")
 
-psa_tbl <- psa %>%
-  gt() %>%
+psa_tbl <- psa |>
+  gt() |>
   tab_header(
     title = "Table 6: The Productivity Susceptibility Analysis (PSA) scores by species. Higher PSA values indicate higher vulnerability."
-  ) %>%
+  ) |>
   cols_align(
     align = "left",
     columns = "Species"
-  ) %>%
+  ) |>
   cols_align(
     align = "right",
     columns = "PSA Score"
-  ) %>%
+  ) |>
   data_color(
     columns = "PSA Score", method = "numeric", palette = "viridis"
   )
