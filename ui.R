@@ -1437,8 +1437,8 @@ shinyUI(
                       choices = c(
                         "Rank",
                         "Factor Score",
-                        "Rebuilding Target Group",
-                        "Managemeng Group"
+                        "Rebuilding Target Year",
+                        "Management Group"
                       ),
                       selected = c(
                         "Rank",
