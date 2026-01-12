@@ -800,6 +800,22 @@ shinyServer(function(input, output, session) {
           style = list(cell_text(weight = "bold")),
           locations = cells_body(columns = `Weighted Total Score`)
         ) |>
+        tab_style(
+          style = list(cell_text(style = "italic", color = "grey45")),
+          locations = cells_body(
+            columns = "Species",
+            rows = Species %in%
+              c(
+                "Black rockfish",
+                "Blue/Deacon rockfish",
+                "Cabezon",
+                "China rockfish",
+                "Copper rockfish",
+                "Kelp greenling",
+                "Quillback rockfish"
+              )
+          )
+        ) |>
         opt_interactive(
           use_search = TRUE,
           use_highlight = TRUE,
@@ -951,6 +967,22 @@ shinyServer(function(input, output, session) {
       tab_options(
         heading.subtitle.font.size = 14,
         footnotes.font.size = 14
+      ) |>
+      tab_style(
+        style = list(cell_text(style = "italic", color = "grey45")),
+        locations = cells_body(
+          columns = "Species",
+          rows = Species %in%
+            c(
+              "Black rockfish",
+              "Blue/Deacon rockfish",
+              "Cabezon",
+              "China rockfish",
+              "Copper rockfish",
+              "Kelp greenling",
+              "Quillback rockfish"
+            )
+        )
       )
 
     for (i in input$com_colors) {
@@ -1108,6 +1140,22 @@ shinyServer(function(input, output, session) {
       tab_options(
         heading.subtitle.font.size = 14,
         footnotes.font.size = 14
+      ) |>
+      tab_style(
+        style = list(cell_text(style = "italic", color = "grey45")),
+        locations = cells_body(
+          columns = "Species",
+          rows = Species %in%
+            c(
+              "Black rockfish",
+              "Blue/Deacon rockfish",
+              "Cabezon",
+              "China rockfish",
+              "Copper rockfish",
+              "Kelp greenling",
+              "Quillback rockfish"
+            )
+        )
       )
 
     for (i in input$rec_colors) {
@@ -1131,8 +1179,8 @@ shinyServer(function(input, output, session) {
       fmt_number(columns = -c("Rank"), decimals = 2) |>
       tab_footnote(paste0("Source: GEMM ", text_recent_five_years(), ".")) |>
       tab_footnote(
-        footnote = "Recreational catches are not calculated
-                   for petrale sole and widow rockfish in Washington.",
+        footnote = "Recreational catches
+                   for petrale sole and widow rockfish in Washington are only available in 2023-24.",
         locations = cells_column_labels(columns = `Factor Score`)
       )
 
@@ -1225,6 +1273,22 @@ shinyServer(function(input, output, session) {
       tab_options(
         heading.subtitle.font.size = 14,
         footnotes.font.size = 14
+      ) |>
+      tab_style(
+        style = list(cell_text(style = "italic", color = "grey45")),
+        locations = cells_body(
+          columns = "Species",
+          rows = Species %in%
+            c(
+              "Black rockfish",
+              "Blue/Deacon rockfish",
+              "Cabezon",
+              "China rockfish",
+              "Copper rockfish",
+              "Kelp greenling",
+              "Quillback rockfish"
+            )
+        )
       )
 
     for (i in input$tribal_colors) {
@@ -1343,6 +1407,22 @@ shinyServer(function(input, output, session) {
       tab_options(
         heading.subtitle.font.size = 14,
         footnotes.font.size = 14
+      ) |>
+      tab_style(
+        style = list(cell_text(style = "italic", color = "grey45")),
+        locations = cells_body(
+          columns = "Species",
+          rows = Species %in%
+            c(
+              "Black rockfish",
+              "Blue/Deacon rockfish",
+              "Cabezon",
+              "China rockfish",
+              "Copper rockfish",
+              "Kelp greenling",
+              "Quillback rockfish"
+            )
+        )
       )
 
     for (i in input$cd_colors) {
@@ -1490,6 +1570,22 @@ shinyServer(function(input, output, session) {
       tab_options(
         heading.subtitle.font.size = 14,
         footnotes.font.size = 14
+      ) |>
+      tab_style(
+        style = list(cell_text(style = "italic", color = "grey45")),
+        locations = cells_body(
+          columns = "Species",
+          rows = Species %in%
+            c(
+              "Black rockfish",
+              "Blue/Deacon rockfish",
+              "Cabezon",
+              "China rockfish",
+              "Copper rockfish",
+              "Kelp greenling",
+              "Quillback rockfish"
+            )
+        )
       )
 
     for (i in input$reb_colors) {
@@ -1620,6 +1716,22 @@ shinyServer(function(input, output, session) {
       tab_options(
         heading.subtitle.font.size = 14,
         footnotes.font.size = 14
+      ) |>
+      tab_style(
+        style = list(cell_text(style = "italic", color = "grey45")),
+        locations = cells_body(
+          columns = "Species",
+          rows = Species %in%
+            c(
+              "Black rockfish",
+              "Blue/Deacon rockfish",
+              "Cabezon",
+              "China rockfish",
+              "Copper rockfish",
+              "Kelp greenling",
+              "Quillback rockfish"
+            )
+        )
       )
 
     # reverse color scale for Fraction_Unfished?
@@ -1777,6 +1889,22 @@ shinyServer(function(input, output, session) {
       ) |>
       tab_footnote(
         footnote = "Source: GEMM"
+      ) |>
+      tab_style(
+        style = list(cell_text(style = "italic", color = "grey45")),
+        locations = cells_body(
+          columns = "Species",
+          rows = Species %in%
+            c(
+              "Black rockfish",
+              "Blue/Deacon rockfish",
+              "Cabezon",
+              "China rockfish",
+              "Copper rockfish",
+              "Kelp greenling",
+              "Quillback rockfish"
+            )
+        )
       )
 
     for (i in input$fm_colors) {
@@ -1916,6 +2044,22 @@ shinyServer(function(input, output, session) {
       tab_options(
         heading.subtitle.font.size = 14,
         footnotes.font.size = 14
+      ) |>
+      tab_style(
+        style = list(cell_text(style = "italic", color = "grey45")),
+        locations = cells_body(
+          columns = "Species",
+          rows = Species %in%
+            c(
+              "Black rockfish",
+              "Blue/Deacon rockfish",
+              "Cabezon",
+              "China rockfish",
+              "Copper rockfish",
+              "Kelp greenling",
+              "Quillback rockfish"
+            )
+        )
       )
 
     for (i in input$eco_colors) {
@@ -2031,6 +2175,22 @@ shinyServer(function(input, output, session) {
       tab_options(
         heading.subtitle.font.size = 14,
         footnotes.font.size = 14
+      ) |>
+      tab_style(
+        style = list(cell_text(style = "italic", color = "grey45")),
+        locations = cells_body(
+          columns = "Species",
+          rows = Species %in%
+            c(
+              "Black rockfish",
+              "Blue/Deacon rockfish",
+              "Cabezon",
+              "China rockfish",
+              "Copper rockfish",
+              "Kelp greenling",
+              "Quillback rockfish"
+            )
+        )
       )
 
     for (i in input$ni_colors) {
@@ -2174,6 +2334,22 @@ shinyServer(function(input, output, session) {
       tab_options(
         heading.subtitle.font.size = 14,
         footnotes.font.size = 14
+      ) |>
+      tab_style(
+        style = list(cell_text(style = "italic", color = "grey45")),
+        locations = cells_body(
+          columns = "Species",
+          rows = Species %in%
+            c(
+              "Black rockfish",
+              "Blue/Deacon rockfish",
+              "Cabezon",
+              "China rockfish",
+              "Copper rockfish",
+              "Kelp greenling",
+              "Quillback rockfish"
+            )
+        )
       )
 
     for (i in input$af_colors) {
