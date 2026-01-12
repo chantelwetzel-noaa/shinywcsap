@@ -816,6 +816,10 @@ shinyServer(function(input, output, session) {
               )
           )
         ) |>
+        tab_footnote(
+          footnote = "Nearshore species that include stock areas still under consideration for inclusion or removal from the groundfish Fishery Management Plan are denoted in grey and italics.",
+          locations = cells_column_labels(columns = Species)
+        ) |>
         opt_interactive(
           use_search = TRUE,
           use_highlight = TRUE,
@@ -878,15 +882,15 @@ shinyServer(function(input, output, session) {
 
       for_plot$rank_species <- paste0(for_plot$Rank, ". ", for_plot$Species)
 
-      if (input$num_col == "10" | input$num_col == "20") {
-        top_species <- head(for_plot, as.numeric(input$num_col) * 10)
-      } else if (input$num_col == "21-40") {
-        top_species <- for_plot[201:400, ]
-      } else if (input$num_col == "41-60") {
-        top_species <- for_plot[401:600, ]
-      } else {
-        top_species <- for_plot[601:650, ]
-      }
+      #if (input$num_col == "10" | input$num_col == "20") {
+      top_species <- head(for_plot, as.numeric(input$num_col) * 10)
+      #} else if (input$num_col == "21-40") {
+      #  top_species <- for_plot[201:400, ]
+      #} else if (input$num_col == "41-60") {
+      #  top_species <- for_plot[401:600, ]
+      #} else {
+      #  top_species <- for_plot[601:650, ]
+      #}
 
       overall_plot <- ggplot(
         top_species,
@@ -983,6 +987,10 @@ shinyServer(function(input, output, session) {
               "Quillback rockfish"
             )
         )
+      ) |>
+      tab_footnote(
+        footnote = "Nearshore species that include stock areas still under consideration for inclusion or removal from the groundfish Fishery Management Plan are denoted in grey and italics.",
+        locations = cells_column_labels(columns = Species)
       )
 
     for (i in input$com_colors) {
@@ -1156,6 +1164,10 @@ shinyServer(function(input, output, session) {
               "Quillback rockfish"
             )
         )
+      ) |>
+      tab_footnote(
+        footnote = "Nearshore species that include stock areas still under consideration for inclusion or removal from the groundfish Fishery Management Plan are denoted in grey and italics.",
+        locations = cells_column_labels(columns = Species)
       )
 
     for (i in input$rec_colors) {
@@ -1289,6 +1301,10 @@ shinyServer(function(input, output, session) {
               "Quillback rockfish"
             )
         )
+      ) |>
+      tab_footnote(
+        footnote = "Nearshore species that include stock areas still under consideration for inclusion or removal from the groundfish Fishery Management Plan are denoted in grey and italics.",
+        locations = cells_column_labels(columns = Species)
       )
 
     for (i in input$tribal_colors) {
@@ -1423,6 +1439,10 @@ shinyServer(function(input, output, session) {
               "Quillback rockfish"
             )
         )
+      ) |>
+      tab_footnote(
+        footnote = "Nearshore species that include stock areas still under consideration for inclusion or removal from the groundfish Fishery Management Plan are denoted in grey and italics.",
+        locations = cells_column_labels(columns = Species)
       )
 
     for (i in input$cd_colors) {
@@ -1455,7 +1475,7 @@ shinyServer(function(input, output, session) {
           footnote = paste0(
             "Source: GEMM ",
             text_recent_five_years(),
-            " and PacFIN APEX GMT008"
+            " and default harvest specifications in PacFIN APEX GMT008"
           ),
           locations = cells_column_labels(columns = `Projected ACL Attainment`)
         ) |>
@@ -1586,6 +1606,10 @@ shinyServer(function(input, output, session) {
               "Quillback rockfish"
             )
         )
+      ) |>
+      tab_footnote(
+        footnote = "Nearshore species that include stock areas still under consideration for inclusion or removal from the groundfish Fishery Management Plan are denoted in grey and italics.",
+        locations = cells_column_labels(columns = Species)
       )
 
     for (i in input$reb_colors) {
@@ -1732,6 +1756,10 @@ shinyServer(function(input, output, session) {
               "Quillback rockfish"
             )
         )
+      ) |>
+      tab_footnote(
+        footnote = "Nearshore species that include stock areas still under consideration for inclusion or removal from the groundfish Fishery Management Plan are denoted in grey and italics.",
+        locations = cells_column_labels(columns = Species)
       )
 
     # reverse color scale for Fraction_Unfished?
@@ -1905,6 +1933,10 @@ shinyServer(function(input, output, session) {
               "Quillback rockfish"
             )
         )
+      ) |>
+      tab_footnote(
+        footnote = "Nearshore species that include stock areas still under consideration for inclusion or removal from the groundfish Fishery Management Plan are denoted in grey and italics.",
+        locations = cells_column_labels(columns = Species)
       )
 
     for (i in input$fm_colors) {
@@ -2060,6 +2092,10 @@ shinyServer(function(input, output, session) {
               "Quillback rockfish"
             )
         )
+      ) |>
+      tab_footnote(
+        footnote = "Nearshore species that include stock areas still under consideration for inclusion or removal from the groundfish Fishery Management Plan are denoted in grey and italics.",
+        locations = cells_column_labels(columns = Species)
       )
 
     for (i in input$eco_colors) {
@@ -2191,6 +2227,10 @@ shinyServer(function(input, output, session) {
               "Quillback rockfish"
             )
         )
+      ) |>
+      tab_footnote(
+        footnote = "Nearshore species that include stock areas still under consideration for inclusion or removal from the groundfish Fishery Management Plan are denoted in grey and italics.",
+        locations = cells_column_labels(columns = Species)
       )
 
     for (i in input$ni_colors) {
@@ -2350,6 +2390,10 @@ shinyServer(function(input, output, session) {
               "Quillback rockfish"
             )
         )
+      ) |>
+      tab_footnote(
+        footnote = "Nearshore species that include stock areas still under consideration for inclusion or removal from the groundfish Fishery Management Plan are denoted in grey and italics.",
+        locations = cells_column_labels(columns = Species)
       )
 
     for (i in input$af_colors) {

@@ -316,7 +316,7 @@ shinyUI(
                   selectInput(
                     "num_col",
                     label = NULL,
-                    choices = c("10", "20", "21-40", "41-60", "61-65"),
+                    choices = c("10", "20", "30", "40", "50"),
                     selected = "10",
                     width = "75px"
                   )
