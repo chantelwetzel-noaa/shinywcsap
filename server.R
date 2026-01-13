@@ -277,26 +277,13 @@ shinyServer(function(input, output, session) {
   })
   year_assessed <- reactive({
     req(assess_freq_data)
-    year_assessed <- as.data.frame(assess_freq_data()[, "Last Assessment Year"])
-    colnames(year_assessed) <- NULL
+    year_assessed <- assess_freq_data()[, c(
+      "Species",
+      "Last Assessment Year"
+    )]
+    colnames(year_assessed) <- c("Species", "last_assessed")
     year_assessed
   })
-
-  # results <- reactive({
-  #   results <- data.frame(
-  #     species = com_rev_data$Species,
-  #     com_rev_fs = com_rev_data$`Factor Score`,
-  #     rec_fs = rec_data$`Factor Score`,
-  #     tribal_fs = tribal_data$`Factor Score`,
-  #     const_dem_fs = const_dem_data$`Factor Score`,
-  #     reb_fs = rebuilding_data$`Factor Score`,
-  #     ss_fs = stock_stat_data$`Factor Score`,
-  #     fish_mort_fs = fish_mort_data$`Factor Score`,
-  #     eco_fs = eco_data$`Factor Score`,
-  #     new_info_fs = new_info_data$`Factor Score`,
-  #     assess_fs = assess_freq_data$`Factor Score`)
-  #   results
-  # })
 
   # create overall ranking table
   results <- reactive({
@@ -310,32 +297,36 @@ shinyServer(function(input, output, session) {
                 dplyr::left_join(
                   dplyr::left_join(
                     dplyr::left_join(
-                      com_rev_data()[, join_cols],
-                      rec_data()[, join_cols],
+                      dplyr::left_join(
+                        com_rev_data()[, join_cols],
+                        rec_data()[, join_cols],
+                        by = "Species"
+                      ),
+                      tribal_data()[, join_cols],
                       by = "Species"
                     ),
-                    tribal_data()[, join_cols],
+                    const_dem_data()[, join_cols],
                     by = "Species"
                   ),
-                  const_dem_data()[, join_cols],
+                  rebuilding_data()[, join_cols],
                   by = "Species"
                 ),
-                rebuilding_data()[, join_cols],
+                stock_stat_data()[, join_cols],
                 by = "Species"
               ),
-              stock_stat_data()[, join_cols],
+              fish_mort_data()[, join_cols],
               by = "Species"
             ),
-            fish_mort_data()[, join_cols],
+            eco_data()[, join_cols],
             by = "Species"
           ),
-          eco_data()[, join_cols],
+          new_info_data()[, join_cols],
           by = "Species"
         ),
-        new_info_data()[, join_cols],
+        assess_freq_data()[, join_cols],
         by = "Species"
       ),
-      assess_freq_data()[, join_cols],
+      year_assessed(),
       by = "Species"
     )
     colnames(results) <- c(
@@ -349,8 +340,14 @@ shinyServer(function(input, output, session) {
       "fish_mort_fs",
       "eco_fs",
       "new_info_fs",
-      "assess_fs"
+      "assess_fs",
+      "last_assessed"
     )
+    #results <- left_join(
+    #  results,
+    #  year_assessed(),
+    #  by = "Species"
+    #)
     results <- as.data.frame(results)
     results
   })
@@ -715,7 +712,7 @@ shinyServer(function(input, output, session) {
     overall_data <- data.frame(
       species = results()$species, #1
       rank = NA, #2
-      last_assessed = year_assessed(), #3
+      last_assessed = results()$last_assessed, #year_assessed()$last_assessed, #year_assessed(), #3
       total = NA, #4
       com_rev_fs_weight = results()$com_rev_fs * comm_weight(), #5
       rec_fs_weight = results()$rec_fs * rec_weight(), #6
@@ -732,16 +729,17 @@ shinyServer(function(input, output, session) {
     overall_data$total <- rowSums(overall_data[, 5:ncol(overall_data)])
 
     overall_data <- overall_data |>
+      mutate(rank = rank(-total, ties.method = "min")) |>
       arrange(desc(total))
 
     # create rank column
     #overall_data$rank <- NA
-    order_totals <- order(
-      overall_data$total,
-      overall_data$species,
-      decreasing = TRUE
-    )
-    overall_data$rank[order_totals] <- 1:nrow(overall_data)
+    #order_totals <- order(
+    #  overall_data$total,
+    #  overall_data$species,
+    #  decreasing = TRUE
+    #)
+    #overall_data$rank[order_totals] <- 1:nrow(overall_data)
 
     # rename columns in table
     colnames(overall_data) <- c(
@@ -791,7 +789,8 @@ shinyServer(function(input, output, session) {
           `New Information` = "New Information Factor Score",
           `Assessment Frequency` = "Assmt. Frequency Factor Score"
         ) |>
-        fmt_number(columns = -c("Rank", "Last Assessed"), decimals = 2) |>
+        #fmt_number(columns = -c("Rank", "Last Assessed"), decimals = 2) |>
+        fmt_number(columns = -c("Rank"), decimals = 2) |>
         tab_style(
           style = list(cell_text(weight = "bold")),
           locations = cells_body(columns = c("Species", "Rank"))
