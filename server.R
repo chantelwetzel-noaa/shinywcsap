@@ -15,11 +15,13 @@ library(gt)
 library(gtExtras)
 library(plotly)
 library(viridis)
+library(V8)
 
 ## downloads
 library(rmarkdown)
 library(readr)
 library(openxlsx)
+
 
 # define server logic to display user inputs
 shinyServer(function(input, output, session) {

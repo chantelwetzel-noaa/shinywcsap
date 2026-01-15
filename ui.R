@@ -5,6 +5,7 @@ library(shinyBS)
 library(shinydashboard)
 library(shinyWidgets)
 library(shinycssloaders)
+library(V8)
 
 ## data manipulation
 library(dplyr)
