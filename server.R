@@ -42,8 +42,8 @@ shinyServer(function(input, output, session) {
     {
       req(input$yr)
       image <- paste0("www/figs/", input$yr, "/calendar.png")
-      width <- "600px"
-      height <- "600px"
+      width <- "800px"
+      height <- "800px"
       list(
         src = image,
         alt = "Calendar",
