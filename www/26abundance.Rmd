@@ -8,29 +8,31 @@ The stock status factor incorporates scoring based upon the estimated stock stat
  
 
 ```{r, results = 'asis', echo = FALSE}
-library(gt)
+suppressWarnings(library(gt))
 
 abund = data.frame(matrix(NA, 10, 2))
 colnames(abund) <- c("Score", "Stock Status")
 
-abund[1,]  = c(1, "Species abundance is well above the target ($SO > 2*SO_{\\text{PROXY}}$)." )
-abund[2,]  = c(2, "Species abundance is above the target ($2*SO_{\\text{PROXY}}$ $\\ge SO > 1.5*SO_{\\text{PROXY}}$).")
-abund[3,]  = c(4, "Species abundance is above the target ($1.5*SO_{\\text{PROXY}} \\ge SO > 1.1*SO_{\\text{PROXY}}$) or abundance is unknown and vulnerability is low (1.8 $>$ PSA).")
-abund[4,]  = c(5, "Species abundance is below the target ($0.9*SO_{\\text{PROXY}} \\ge SO > \\text{MSST}$) and is not declining.")
-abund[5,]  = c(6, "Species abundance is near the target ($1.1*SO_{\\text{PROXY}} \\ge SO > 0.9*SO_{\\text{PROXY}}$), or is unknown and vulnerability is intermediate (2 $>$ PSA $\\ge$ 1.8).")
-abund[6,]  = c(7, "Species abundance is below the target ($0.9*SO_{\\text{PROXY}} \\ge SO > \\text{MSST}$) and is declining or recent trend unknown.")
-abund[7,]  = c(8, "Species is overfished ($SO \\le \\text{MSST}$) and increasing.")
-abund[8,]  = c(9, "Species is overfished ($SO \\le \\text{MSST}$) and stable.")
-abund[9,]  = c(9, "Species abundance is unknown and the vulnerability is high (PSA $>$ 2).")
-abund[10,] = c(10, "Species is overfished ($SO \\le \\text{MSST}$) and decreasing.")
-
+abund[1,]  = c(1, "Abundance is greater than 2 times the target" )
+abund[2,]  = c(2, "Abundance is between 1.5 and 2 times the target")
+abund[3,]  = c(3, "Abundance is between 1.1 and 1.5 times the target or abundance is unknown and the vulnerability is low (PSA < 1.8)")
+abund[4,]  = c(4, "Abundance is between 0.9 and 1.1 times the target")
+abund[5,]  = c(5, "Abundance is between MSST and 0.9 times that target and is increasing in recent years or abundance is unknown and the vulnerability is moderate (1.8 =< PSA < 2.0)")
+abund[6,]  = c(6, "Abundance is between MSST and 0.9 times that target and is stable in recent years")
+abund[7,]  = c(7, "Abundance is between MSST and 0.9 times that target and is declining in recent years or abundance is unknown and the vulnerability is high (PSA >= 2).")
+abund[8,]  = c(8, "Abundance is below the MSST and increasing in recent years")
+abund[9,]  = c(9, "Abundance is below the MSST and stable in recent years")
+abund[10,] = c(10, "Abundance is below the MSST and decreasing in recent years")
 
 abund_tbl <- abund |>
-  gt() |>
+  gt::gt() |>
   tab_header(
-    title = "Table 5: Factor sores applied based the estimated fraction of unfished spawning output (SO) relative to management targets from the most recent assessment or the PSA score for un-assessed species."
+    title = "Table 5: Factor sores applied based the estimated fraction of unfished spawning output (i.e., abundance) relative to the species-specific management targets from the most recent assessment or the PSA score for un-assessed species."
   ) |>
-  cols_align(
+  gt::tab_options(
+    table.font.size = 12
+  ) |>
+  gt::cols_align(
     align = "left",
     columns = everything()
   )

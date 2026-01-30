@@ -6,8 +6,8 @@ output: html_document
 
 
 ```{r, include = FALSE}
-start_yr <- 2018
-end_yr <- 2022
+start_yr <- 2020
+end_yr <- 2024
 ```
 
 
@@ -24,24 +24,26 @@ The tribal importance scores range from 0 to 3.0 and represent the relative valu
 
   
 ```{r, results = 'asis', echo = FALSE}
-library(gt)
 
 sub_score_data <- read.csv("tables/subsistence_score.csv", header = TRUE) 
 
-sub_score <- sub_score_data %>%
-  gt() %>%
-  tab_header(
+sub_score <- sub_score_data |>
+  gt::gt() |>
+  gt::tab_header(
     title = "Table 2: Tribal importance score by species. The tribal score is colored reflecting low to high scores ranging between blue to green, respectively."
-  ) %>%
-  cols_align(
+  ) |>
+  gt::cols_align(
     align = "left",
     columns = "Species"
-  ) %>%
-  cols_align(
+  ) |>
+  gt::cols_align(
     align = "center",
     columns = "Score"
-  ) %>%
-  data_color(
+  ) |>
+  gt::tab_options(
+    table.font.size = 12
+  ) |>
+  gt::data_color(
     columns = "Score", method = "numeric", palette = "viridis"
   )
 

@@ -9,7 +9,6 @@ If attainment of a species is high relative to the Overfishing Limits (OFLs), de
 The scoring of this factor by species are shown in Table 7.
 
 ```{r, results = 'asis', echo = FALSE}
-library(gt)
 
 mort <- data.frame(matrix(NA, 10, 2))
 colnames(mort) <- c("Score", "Stock Harvest Status")
@@ -25,13 +24,16 @@ mort[8,]  = c(8, "High fisheries impact, potential overfishing on the stock (\\(
 mort[9,]  = c(9, "Mortality slightly above the OFL (\\(OFL <  catch \\le 1.1*OFL\\)).")
 mort[10,] = c(10, "Mortality well above the OFL (\\(1.1*OFL <  catch \\)).")
 
-mort_tbl <- mort %>%
-  gt() %>%
-  tab_header(
+mort_tbl <- mort |>
+  gt::gt() |>
+  gt::tab_header(
     title = "Table 8: Factor scores applied based the percent of the OFL attainment by species. OFL
 either refers to the species-specific OFL or the species-species OFL contribution to a complex"
-  ) %>%
-  cols_align(
+  ) |>
+  gt::tab_options(
+    table.font.size = 12
+  ) |>
+  gt::cols_align(
     align = "left"
   )
 

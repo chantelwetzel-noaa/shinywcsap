@@ -6,7 +6,7 @@ output: html_document
 
 
 ```{r, include = FALSE}
-ass_yr <- 2025
+ass_yr <- 2027
 ```
 
 
@@ -29,7 +29,6 @@ $$
 
 
 ```{r, results = 'asis', echo = FALSE}
-library(gt)
 
 mort = data.frame(matrix(NA, 6, 2))
 colnames(mort) = c("Choke Score", "Projected Future ACL Attainment")
@@ -41,11 +40,14 @@ mort[4,]  = c(3, "0.90*ACL < Current Average Catch \\(\\le ACL\\)")
 mort[5,]  = c(4, "ACL < Current Average Catch \\(\\le 1.1*ACL\\)")
 mort[6,]  = c(5, "\\(1.25*ACL\\) < Current Average Catch")
 
-mort_tbl <- mort %>%
-  gt::gt() %>%
+mort_tbl <- mort |>
+  gt::gt() |>
   gt::tab_header(
     title = "Table 4. Choke scores applied based the percent of the projected ACL attainment given current average coastwide catches by species."
-  ) %>%
+  ) |>
+  gt::tab_options(
+    table.font.size = 12
+  ) |>
   gt::cols_align(
     align = "left"
   )
