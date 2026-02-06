@@ -8,7 +8,6 @@ The stock status factor incorporates scoring based upon the estimated stock stat
  
 
 ```{r, results = 'asis', echo = FALSE}
-suppressWarnings(library(gt))
 
 abund = data.frame(matrix(NA, 10, 2))
 colnames(abund) <- c("Score", "Stock Status")
@@ -17,20 +16,20 @@ abund[1,]  = c(1, "Abundance is greater than 2 times the target" )
 abund[2,]  = c(2, "Abundance is between 1.5 and 2 times the target")
 abund[3,]  = c(3, "Abundance is between 1.1 and 1.5 times the target or abundance is unknown and the vulnerability is low (PSA < 1.8)")
 abund[4,]  = c(4, "Abundance is between 0.9 and 1.1 times the target")
-abund[5,]  = c(5, "Abundance is between MSST and 0.9 times that target and is increasing in recent years or abundance is unknown and the vulnerability is moderate (1.8 =< PSA < 2.0)")
-abund[6,]  = c(6, "Abundance is between MSST and 0.9 times that target and is stable in recent years")
-abund[7,]  = c(7, "Abundance is between MSST and 0.9 times that target and is declining in recent years or abundance is unknown and the vulnerability is high (PSA >= 2).")
+abund[5,]  = c(5, "Abundance is between MSST and 0.9 times the target and is increasing in recent years or abundance is unknown and the vulnerability is moderate (1.8 =< PSA < 2.0)")
+abund[6,]  = c(6, "Abundance is between MSST and 0.9 times the target and is stable in recent years")
+abund[7,]  = c(7, "Abundance is between MSST and 0.9 times the target and is declining in recent years or abundance is unknown and the vulnerability is high (PSA >= 2).")
 abund[8,]  = c(8, "Abundance is below the MSST and increasing in recent years")
 abund[9,]  = c(9, "Abundance is below the MSST and stable in recent years")
 abund[10,] = c(10, "Abundance is below the MSST and decreasing in recent years")
 
 abund_tbl <- abund |>
   gt::gt() |>
-  tab_header(
+  gt::tab_header(
     title = "Table 5: Factor sores applied based the estimated fraction of unfished spawning output (i.e., abundance) relative to the species-specific management targets from the most recent assessment or the PSA score for un-assessed species."
   ) |>
   gt::tab_options(
-    table.font.size = 12
+    table.font.size = 14
   ) |>
   gt::cols_align(
     align = "left",
@@ -42,28 +41,32 @@ abund_tbl
 ```
 
 
-
 ```{r, results = 'asis', echo = FALSE}
-library(gt)
 
-psa <- read.csv("tables/psa.csv", header = TRUE) 
-psa <- psa[-c(2)]
-colnames(psa) <- c("Species", "PSA Score")
+psa <- read.csv("tables/psa.csv", header = TRUE) |>
+  dplyr::filter(is.na(Status)) |>
+  dplyr::select(-Status) |>
+  dplyr::rename(
+    `PSA Score` = PSA_Score
+  )
 
 psa_tbl <- psa |>
-  gt() |>
-  tab_header(
+  gt::gt() |>
+  gt::tab_header(
     title = "Table 6: The Productivity Susceptibility Analysis (PSA) scores by species. Higher PSA values indicate higher vulnerability."
   ) |>
-  cols_align(
+  gt::cols_align(
     align = "left",
     columns = "Species"
   ) |>
-  cols_align(
+  gt::cols_align(
     align = "right",
     columns = "PSA Score"
   ) |>
-  data_color(
+  gt::tab_options(
+    table.font.size = 14
+  ) |>
+  gt::data_color(
     columns = "PSA Score", method = "numeric", palette = "viridis"
   )
 
