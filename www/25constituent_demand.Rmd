@@ -55,3 +55,5 @@ mort_tbl <- mort |>
 mort_tbl
 
 ```
+
+Additionally, in 2026, the choke score was set at 2 for shortspine thornyhead and yellowtail rockfish based upon comments from the Groundfish Advisory Panel and the Pacific Fishery Management Council regarding the potential for these species to be choke stocks given the expected ACLs in 2027-28 and within sector constraints in the groundfish fishery which are not reflected in the projected attainment percentages.
